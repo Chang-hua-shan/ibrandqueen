@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <title>iBrandQueen | 專業個人品牌定位與整合行銷顧問</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="iBrandQueen 品牌女王專注於企業主與菁英的個人品牌定位、整合行銷策略、商業IP孵化及公關策略諮詢，為您定義品牌高度，放大市場商業影響力。">
+  <meta name="keywords" content="iBrandQueen, 品牌女王, 個人品牌定位, 整合行銷策略, 自媒體IP孵化, 商業顧問, 電子名片">
+  <meta name="author" content="iBrandQueen">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="iBrandQueen | 專業個人品牌定位與整合行銷顧問">
+  <meta property="og:description" content="專為企業主與跨界菁英打造的一站式個人品牌與整合行銷方案。透過系統化定位與自媒體IP孵化，助力實現商業價值最大化。">
+  <meta property="og:image" content="assets/brand_share.png">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+
+  <!-- Ambient Light Effects (Background Glow Spheres) -->
+  <div class="glow-sphere sphere-1"></div>
+  <div class="glow-sphere sphere-2"></div>
+  <div class="glow-sphere sphere-3"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#hero" class="logo" aria-label="iBrandQueen 首頁">
+        <i class="fa-solid fa-crown logo-crown"></i>
+        <span class="gradient-text">iBrandQueen</span>
+      </a>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#about" class="nav-link" data-i18n="nav_about">關於女王</a></li>
+        <li><a href="#services" class="nav-link" data-i18n="nav_services">品牌服務</a></li>
+        <li><a href="#connect" class="nav-link" data-i18n="nav_connect">數位名片</a></li>
+        <li><a href="#booking" class="nav-link" data-i18n="nav_booking">合作預約</a></li>
+      </ul>
+      
+      <div class="nav-actions">
+        <!-- Language Selector Dropdown -->
+        <div class="lang-selector">
+          <select id="lang-select" class="lang-select" aria-label="切換語言">
+            <option value="zh">繁中</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+        
+        <button class="icon-btn theme-toggle" id="theme-toggle-btn" aria-label="切換主題" title="切換主題">
+          <i class="fa-solid fa-sun"></i>
+        </button>
+        
+        <button class="hamburger" id="hamburger-btn" aria-label="開啟選單" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <i class="fa-solid fa-gem"></i>
+          <span data-i18n="hero_tag">PERSONAL BRAND CONSULTANT</span>
+        </div>
+        <h1 class="hero-title" data-i18n="hero_title">
+          定義品牌高度<br>
+          <span class="gradient-text">釋放商業影響力</span>
+        </h1>
+        <p class="hero-desc" data-i18n="hero_desc">
+          專為創辦人、企業菁英與高階主管量身規劃的個人品牌定位與整合行銷策略。我們透過多維度的定位診斷、社群IP孵化與高端公關對接，協助您在行業中建立無可替代的個人權威與商業影響力。
+        </p>
+        <div class="hero-btns">
+          <a href="#services" class="btn btn-primary" id="hero-btn-primary">
+            <span data-i18n="btn_explore_services">探索服務項目</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#booking" class="btn btn-secondary" id="hero-btn-secondary">
+            <span data-i18n="btn_book_consultation">預約一對一諮詢</span>
+            <i class="fa-regular fa-calendar-check"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="portrait-glow-ring"></div>
+        <div class="portrait-frame">
+          <i class="fa-solid fa-crown crown-vector"></i>
+          <div class="portrait-avatar-placeholder">
+            <svg class="cover-silhouette" viewBox="0 0 200 220" fill="none" style="width: 100%; height: 100%;">
+              <path d="M100 25 C122 25 140 43 140 65 C140 82 130 96 116 102 C142 113 160 137 162 165 H38 C40 137 58 113 84 102 C70 96 60 82 60 65 C60 43 78 25 100 25 Z" fill="url(#hero-avatar-grad)" />
+              <defs>
+                <linearGradient id="hero-avatar-grad" x1="100" y1="25" x2="100" y2="165" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#8b5cf6"/>
+                  <stop offset="1" stop-color="#ec4899"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="about-visual">
+        <div class="portrait-glow-ring" style="width:110%; height:110%;"></div>
+        <div class="portrait-frame" style="width: 320px; height: 400px;">
+          <div class="portrait-avatar-placeholder">
+            <svg class="cover-silhouette" viewBox="0 0 200 220" fill="none" style="width: 90%; height: 90%;">
+              <path d="M100 25 C122 25 140 43 140 65 C140 82 130 96 116 102 C142 113 160 137 162 165 H38 C40 137 58 113 84 102 C70 96 60 82 60 65 C60 43 78 25 100 25 Z" fill="url(#about-avatar-grad)" />
+              <defs>
+                <linearGradient id="about-avatar-grad" x1="100" y1="25" x2="100" y2="165" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#f59e0b"/>
+                  <stop offset="1" stop-color="#d97706"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="experience-badge">
+            <span class="exp-num">10+</span>
+            <span class="exp-text" data-i18n="exp_badge_text">YEARS EXP</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="about-content">
+        <span class="editorial-label" data-i18n="about_label">MEET IBRANDQUEEN</span>
+        <h2 class="section-title" data-i18n="about_title">關於 iBrandQueen</h2>
+        <div class="about-quote" data-i18n="about_quote">
+          「每個卓越的靈魂背後，都需要一個能被世界看見的品牌定位。」
+        </div>
+        <p class="about-p" data-i18n="about_desc1">
+          iBrandQueen（品牌女王）是專為高端商務人士、新創創辦人及專業菁英打造的個人品牌推手。我們深信，在數位行銷的時代，個人影響力就是最具價值的無形資產。
+        </p>
+        <p class="about-p" data-i18n="about_desc2">
+          憑藉超過十年的品牌定位診斷、整合行銷策略與跨界資源引薦經驗，我們已協助無數企業家與各產業菁英將自身的專業知識與理念，孵化為具備商業變現價值的個人 IP，實現跨越式的品牌升級與資源對接。
+        </p>
+        
+        <div class="skills-list">
+          <div class="skill-item">
+            <i class="fa-solid fa-circle-check skill-icon"></i>
+            <span data-i18n="skill_1">個人品牌診斷與策略定位</span>
+          </div>
+          <div class="skill-item">
+            <i class="fa-solid fa-circle-check skill-icon"></i>
+            <span data-i18n="skill_2">自媒體商業 IP 孵化顧問</span>
+          </div>
+          <div class="skill-item">
+            <i class="fa-solid fa-circle-check skill-icon"></i>
+            <span data-i18n="skill_3">整合行銷傳播與媒體公關</span>
+          </div>
+          <div class="skill-item">
+            <i class="fa-solid fa-circle-check skill-icon"></i>
+            <span data-i18n="skill_4">跨界商務媒合與資源鏈結</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <span class="editorial-label" data-i18n="services_label">EXPERT SERVICES</span>
+        <h2 class="section-title" data-i18n="services_title">品牌服務生態</h2>
+        <p class="section-subtitle" data-i18n="services_subtitle">我們提供一站式的專業個人行銷方案，從思維重塑、媒體曝光到商務資源對接，全方位開拓您的影響力版圖。</p>
+        <div class="title-underline"></div>
+      </div>
+      
+      <div class="services-grid">
+        <!-- Service Card 1 -->
+        <div class="glass-card service-card">
+          <div class="service-icon-box">
+            <i class="fa-solid fa-gem"></i>
+          </div>
+          <h3 class="service-title" data-i18n="service1_title">個人品牌定位顧問</h3>
+          <p class="service-desc" data-i18n="service1_desc">
+            針對創辦人與菁英進行深度的品牌人格診斷，梳理出獨一無二的核心優勢與價值，提供精準的市場競爭力定位與品牌識別策略。
+          </p>
+          <ul class="service-features">
+            <li class="service-feat-item"><i class="fa-solid fa-chevron-right"></i> <span data-i18n="service1_feat1">個人品牌 DNA 定位診斷</span></li>
+            <li class="service-feat-item"><i class="fa-solid fa-chevron-right"></i> <span data-i18n="service1_feat2">核心故事與行銷標籤規劃</span></li>
+            <li class="service-feat-item"><i class="fa-solid fa-chevron-right"></i> <span data-i18n="service1_feat3">高端商務形象與視覺識別顧問</span></li>
+          </ul>
+        </div>
+        
+        <!-- Service Card 2 -->
+        <div class="glass-card service-card">
+          <div class="service-icon-box">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h3 class="service-title" data-i18n="service2_title">整合行銷公關傳播</h3>
+          <p class="service-desc" data-i18n="service2_desc">
+            規劃多維度的整合行銷方案，包含主流媒體公關採訪企劃、數位行銷宣傳與高端商業社群網絡推廣，讓您的品牌迅速建立專業信任感。
+          </p>
+          <ul class="service-features">
+            <li class="service-feat-item"><i class="fa-solid fa-chevron-right"></i> <span data-i18n="service2_feat1">媒體公關報導與專題採訪企劃</span></li>
+            <li class="service-feat-item"><i class="fa-solid fa-chevron-right"></i> <span data-i18n="service2_feat2">多管道數位社群整合行銷</span></li>
+            <li class="service-feat-item"><i class="fa-solid fa-chevron-right"></i> <span data-i18n="service2_feat3">個人自媒體運營推廣策略</span></li>
+          </ul>
+        </div>
+        
+        <!-- Service Card 3 -->
+        <div class="glass-card service-card">
+          <div class="service-icon-box">
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+          <h3 class="service-title" data-i18n="service3_title">自媒體與 IP 孵化</h3>
+          <p class="service-desc" data-i18n="service3_desc">
+            協助專業人士將知識結構化，孵化為具有高黏著度與傳播力的知識型或商業型個人 IP。搭配影音策略，加速商業轉化與對接。
+          </p>
+          <ul class="service-features">
+            <li class="service-feat-item"><i class="fa-solid fa-chevron-right"></i> <span data-i18n="service3_feat1">自媒體影音企劃與內容矩陣</span></li>
+            <li class="service-feat-item"><i class="fa-solid fa-chevron-right"></i> <span data-i18n="service3_feat2">線上知識課程與個人 IP 孵化</span></li>
+            <li class="service-feat-item"><i class="fa-solid fa-chevron-right"></i> <span data-i18n="service3_feat3">商業合作與商務機會媒合</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Connect Section (NFC Card Showcase) -->
+  <section class="card-showcase" id="connect">
+    <div class="container card-showcase-grid">
+      <div class="mockup-container">
+        <!-- Interactive 3D Mockup -->
+        <div class="card-mockup" id="digital-card-mockup" aria-label="點擊查看數位名片">
+          <div class="card-mockup-glow"></div>
+          <div class="mockup-header">
+            <span class="mockup-logo">iBrandQueen</span>
+            <div class="nfc-badge">
+              <i class="fa-solid fa-wifi"></i>
+              <span>NFC</span>
+            </div>
+          </div>
+          
+          <div class="mockup-body">
+            <div class="mockup-avatar">
+              <svg class="mockup-avatar-svg" viewBox="0 0 200 220" fill="none">
+                <path d="M100 25 C122 25 140 43 140 65 C140 82 130 96 116 102 C142 113 160 137 162 165 H38 C40 137 58 113 84 102 C70 96 60 82 60 65 C60 43 78 25 100 25 Z" fill="url(#mockup-avatar-grad)" />
+                <defs>
+                  <linearGradient id="mockup-avatar-grad" x1="100" y1="25" x2="100" y2="165" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#f59e0b"/>
+                    <stop offset="1" stop-color="#8b5cf6"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <h3 class="mockup-name" data-i18n="mockup_name">品牌女王</h3>
+            <p class="mockup-title" data-i18n="mockup_title">Founder & Chief Consultant</p>
+            <div class="mockup-badge">
+              <i class="fa-solid fa-gem"></i>
+              <span data-i18n="mockup_badge">iBrandQueen</span>
+            </div>
+          </div>
+          
+          <div class="mockup-footer">
+            <span><i class="fa-solid fa-hand-pointer"></i> <span data-i18n="mockup_hint">觸碰或點擊探索</span></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-showcase-content">
+        <span class="editorial-label" data-i18n="connect_label">DIGITAL BUSINESS CARD</span>
+        <h2 class="section-title" data-i18n="connect_title">隨手對接商機，<br>隨時與女王保持聯絡</h2>
+        <p class="about-p" data-i18n="connect_desc">
+          我們將實體感應碰碰卡與專屬的個人數位名片網頁完美結合。只需感應 NFC 卡片或掃描 QR Code，即可在手機上開啟個人數位名片，一鍵下載聯絡資訊存入電話簿，或透過 LINE、Email 迅速對接您的商務合作機會。
+        </p>
+        
+        <div style="display: flex; gap: 16px; margin-top: 30px;">
+          <a href="card.html" class="btn btn-gold" id="btn-open-card">
+            <span data-i18n="btn_open_card">開啟數位名片</span>
+            <i class="fa-solid fa-id-card"></i>
+          </a>
+          <button class="btn btn-secondary" id="btn-show-qr">
+            <span data-i18n="btn_show_qr">掃描名片 QR Code</span>
+            <i class="fa-solid fa-qrcode"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section class="booking" id="booking">
+    <div class="container booking-grid">
+      <div class="booking-info">
+        <span class="editorial-label" data-i18n="booking_label">CONSULTATION BOOKING</span>
+        <h3 data-i18n="booking_headline">開啟您的品牌高度</h3>
+        <p class="booking-desc" data-i18n="booking_desc">
+          不論您是需要深度的個人品牌顧問診斷、整合行銷策略規劃，或是尋求商務對接與 IP 孵化合作，請填寫右側表單。我們將於 24 小時內安排顧問與您聯繫，為您客製化最適合的商務品牌提升計劃。
+        </p>
+        
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <div class="contact-icon-wrapper">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <div class="contact-details">
+              <h4 data-i18n="info_phone_label">聯絡電話</h4>
+              <p>+886 2-2000-0000 | +886 900-000-000</p>
+            </div>
+          </div>
+          
+          <div class="contact-info-item">
+            <div class="contact-icon-wrapper">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="contact-details">
+              <h4 data-i18n="info_email_label">電子郵件</h4>
+              <p>contact@ibrandqueen.com</p>
+            </div>
+          </div>
+          
+          <div class="contact-info-item">
+            <div class="contact-icon-wrapper">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div class="contact-details">
+              <h4 data-i18n="info_address_label">服務總部</h4>
+              <p data-i18n="address_value">台北市信義區信義路五段7號 (台北101)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Booking Form -->
+      <div class="glass-card form-card">
+        <form class="booking-form" id="consultation-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="form-name" class="form-label" data-i18n="form_name_label">您的姓名</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-user"></i>
+                <input type="text" id="form-name" class="form-input" placeholder="請輸入您的姓名" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="form-phone" class="form-label" data-i18n="form_phone_label">聯絡電話</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                <input type="tel" id="form-phone" class="form-input" placeholder="請輸入聯絡電話" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="form-email" class="form-label" data-i18n="form_email_label">電子郵件信箱</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" id="form-email" class="form-input" placeholder="example@domain.com" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="form-service" class="form-label" data-i18n="form_service_label">諮詢服務項目</label>
+            <div class="input-wrapper select-wrapper">
+              <i class="fa-solid fa-briefcase"></i>
+              <select id="form-service" class="form-select" required>
+                <option value="" disabled selected data-i18n="form_service_default">請選擇想諮詢的服務...</option>
+                <option value="brand" data-i18n="form_service_opt1">個人品牌定位顧問</option>
+                <option value="marketing" data-i18n="form_service_opt2">整合行銷公關傳播</option>
+                <option value="ip" data-i18n="form_service_opt3">自媒體與 IP 孵化顧問</option>
+                <option value="other" data-i18n="form_service_opt4">其他跨界商務合作</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="form-message" class="form-label" data-i18n="form_message_label">合作需求備註</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope-open align-top"></i>
+              <textarea id="form-message" class="form-textarea" rows="4" placeholder="請輸入您的具體合作想法、需求背景或諮詢細節..." required></textarea>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn-submit" id="btn-submit">
+            <span class="btn-submit-text" data-i18n="btn_submit_text">送出諮詢申請</span>
+            <i class="fa-solid fa-paper-plane submit-icon"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h3>iBrandQueen</h3>
+        <p data-i18n="footer_desc">高端菁英與創辦人個人品牌與行銷對接的頂尖顧問團隊。定義高度，放大影響力。</p>
+      </div>
+      
+      <div class="footer-links">
+        <h4 data-i18n="footer_links_title">探索連結</h4>
+        <ul>
+          <li><a href="#about" data-i18n="nav_about">關於女王</a></li>
+          <li><a href="#services" data-i18n="nav_services">品牌服務</a></li>
+          <li><a href="#connect" data-i18n="nav_connect">數位名片</a></li>
+          <li><a href="#booking" data-i18n="nav_booking">合作預約</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-links">
+        <h4 data-i18n="footer_contact_title">聯絡諮詢</h4>
+        <ul>
+          <li><span>電話: 02-2000-0000</span></li>
+          <li><span>信箱: contact@ibrandqueen.com</span></li>
+          <li><span>地址: 台北市信義路五段7號</span></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="container footer-bottom">
+      <p class="copyright" data-i18n="copyright">&copy; 2026 iBrandQueen. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="social-link" aria-label="Line"><i class="fa-brands fa-line"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- QR Code Share Modal -->
+  <dialog class="modal" id="qr-modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close-btn" aria-label="關閉彈窗">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h3 class="modal-title" data-i18n="modal_title">掃描分享名片</h3>
+      <p class="modal-desc" data-i18n="modal_desc">請使用手機相機掃描下方 QR Code，即可在您的行動裝置上即刻開啟品牌女王的專屬數位電子名片。</p>
+      
+      <div class="qr-code-wrapper">
+        <img id="qr-code-image" src="" alt="iBrandQueen QR Code" class="qr-image">
+      </div>
+      
+      <button class="btn btn-secondary close-modal-btn" id="modal-close-action" data-i18n="modal_close">關閉視窗</button>
+    </div>
+  </dialog>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast-notification">
+    <i class="fa-solid fa-circle-check toast-icon"></i>
+    <span class="toast-message" data-i18n="toast_success">諮詢表單已成功送出！</span>
+  </div>
+
+  <!-- Javascript -->
+  <script src="script.js"></script>
+</body>
+</html>
