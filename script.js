@@ -298,11 +298,9 @@ function initTheme() {
   const themeToggleBtns = document.querySelectorAll('.theme-toggle');
   if (themeToggleBtns.length === 0) return;
 
-  // Load saved theme or check system dark preference
+  // Load saved theme (defaults to light theme unless dark is saved)
   const savedTheme = localStorage.getItem('brandqueen_theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  const isDark = savedTheme ? (savedTheme === 'dark') : prefersDark;
+  const isDark = savedTheme ? (savedTheme === 'dark') : false;
   
   if (isDark) {
     enableDarkMode();
