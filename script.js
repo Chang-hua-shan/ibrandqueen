@@ -4,6 +4,12 @@
  * Version: 1.0
  */
 
+// ==========================================================================
+// 0. 雲端系統整合設定 (Cloud Integration Config)
+// ==========================================================================
+// 請在下方引號中貼上您部署好的 Google Apps Script 網頁應用程式 (Web App) 網址：
+const GOOGLE_SHEETS_URL = "";
+
 // 1. Localization Dictionary (Traditional Chinese & English)
 const translations = {
   zh: {
@@ -528,6 +534,30 @@ function initForms() {
       };
       inquiries.unshift(newEntry);
       localStorage.setItem('brandqueen_inquiries', JSON.stringify(inquiries));
+
+      // 串接傳送至 Google Sheets
+      const sheetsUrl = GOOGLE_SHEETS_URL || localStorage.getItem('brandqueen_google_sheets_url');
+      if (sheetsUrl) {
+        fetch(sheetsUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: newEntry.name,
+            phone: newEntry.phone,
+            email: newEntry.email,
+            service: newEntry.service,
+            message: newEntry.message,
+            source: newEntry.source === 'digital_card' ? '品牌女王數位名片' : '品牌女王官網首頁'
+          })
+        }).then(() => {
+          console.log('預約資訊已同步寫入 Google Sheets！');
+        }).catch(err => {
+          console.error('寫入 Google Sheets 失敗：', err);
+        });
+      }
 
       console.log('--- iBrandQueen New Booking Inquiry ---', newEntry);
 
