@@ -260,6 +260,9 @@
           <i class="fa-solid fa-lock"></i>
           <input type="password" id="login-password" class="login-input" placeholder="請輸入登入密碼" required>
         </div>
+        <div style="text-align: right; margin-top: 4px;">
+          <a href="#" id="link-forgot-password" style="font-size: 12px; color: var(--text-muted); text-decoration: none; font-weight: 500;">忘記密碼？</a>
+        </div>
       </div>
       <button type="submit" class="btn-auth-submit" id="btn-login-submit">
         <span class="btn-text">立即登入 會員專區</span>
@@ -304,6 +307,27 @@
       </button>
     </form>
 
+    <!-- Form 3: Forgot Password -->
+    <form class="auth-form" id="forgot-form">
+      <div class="login-form-group">
+        <label class="login-form-label" for="forgot-email">認證信箱 Email</label>
+        <div class="login-input-wrapper">
+          <i class="fa-regular fa-envelope"></i>
+          <input type="email" id="forgot-email" class="login-input" placeholder="請輸入註冊的電子信箱" required>
+        </div>
+        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4; margin-top: 6px;">
+          * 我們將發送重設密碼連結至您的信箱，點擊信中的連結即可重新設定您的密碼。
+        </p>
+      </div>
+      <button type="submit" class="btn-auth-submit" id="btn-forgot-submit">
+        <span class="btn-text">發送重設密碼信件</span>
+        <i class="fa-solid fa-paper-plane login-icon"></i>
+      </button>
+      <div style="text-align: center; margin-top: 15px;">
+        <a href="#" id="link-back-login" style="font-size: 12.5px; color: var(--primary-color); text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><i class="fa-solid fa-chevron-left"></i> 返回登入</a>
+      </div>
+    </form>
+
     <!-- Back to homepage link -->
     <div class="auth-footer-links">
       <a href="index.html" class="auth-footer-link">
@@ -331,7 +355,12 @@
       const tabRegisterBtn = document.getElementById('tab-register-btn');
       const loginForm = document.getElementById('login-form');
       const registerForm = document.getElementById('register-form');
+      const forgotForm = document.getElementById('forgot-form');
       const toast = document.getElementById('toast-notification');
+      
+      const forgotLink = document.getElementById('link-forgot-password');
+      const backLoginLink = document.getElementById('link-back-login');
+      const tabsContainer = document.querySelector('.auth-tabs');
 
       // 1. Tab Switch Logic
       tabLoginBtn.addEventListener('click', () => {
@@ -339,6 +368,8 @@
         tabRegisterBtn.classList.remove('active');
         loginForm.classList.add('active');
         registerForm.classList.remove('active');
+        forgotForm.classList.remove('active');
+        tabsContainer.style.display = 'flex';
       });
 
       tabRegisterBtn.addEventListener('click', () => {
@@ -346,6 +377,27 @@
         tabLoginBtn.classList.remove('active');
         registerForm.classList.add('active');
         loginForm.classList.remove('active');
+        forgotForm.classList.remove('active');
+        tabsContainer.style.display = 'flex';
+      });
+
+      // Link forgot password toggle
+      forgotLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        tabsContainer.style.display = 'none';
+        loginForm.classList.remove('active');
+        registerForm.classList.remove('active');
+        forgotForm.classList.add('active');
+      });
+
+      // Link back to login toggle
+      backLoginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        tabsContainer.style.display = 'flex';
+        tabLoginBtn.classList.add('active');
+        tabRegisterBtn.classList.remove('active');
+        loginForm.classList.add('active');
+        forgotForm.classList.remove('active');
       });
 
       // 2. Toast Notification Helper
@@ -502,6 +554,64 @@
               showToast('電子信箱或密碼錯誤 (本地模擬)！', 'fa-solid fa-circle-xmark', true);
             }
           }, 1000);
+        }
+      });
+
+      // 5. Forgot Password Handler
+      forgotForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('forgot-email').value.trim();
+        const submitBtn = document.getElementById('btn-forgot-submit');
+        const originalText = submitBtn.querySelector('.btn-text').textContent;
+        const icon = submitBtn.querySelector('.login-icon');
+
+        submitBtn.disabled = true;
+        submitBtn.querySelector('.btn-text').textContent = '信件發送中...';
+        if (icon) icon.className = 'fa-solid fa-spinner fa-spin login-icon';
+
+        if (useFirebase) {
+          firebase.auth().sendPasswordResetEmail(email)
+            .then(() => {
+              showToast('密碼重設信件已寄出！請至信箱點擊連結修改密碼。', 'fa-solid fa-paper-plane');
+              setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.querySelector('.btn-text').textContent = originalText;
+                if (icon) icon.className = 'fa-solid fa-paper-plane login-icon';
+                backLoginLink.click();
+              }, 2000);
+            })
+            .catch((error) => {
+              console.error("[Forgot] Error:", error);
+              submitBtn.disabled = false;
+              submitBtn.querySelector('.btn-text').textContent = originalText;
+              if (icon) icon.className = 'fa-solid fa-paper-plane login-icon';
+              
+              let msg = '信件發送失敗，請確認信箱是否已註冊！';
+              if (error.code === 'auth/invalid-email') {
+                msg = '信箱格式不正確，請重新輸入！';
+              } else if (error.code === 'auth/user-not-found') {
+                msg = '該電子信箱尚未註冊會員！';
+              }
+              showToast(msg, 'fa-solid fa-circle-xmark', true);
+            });
+        } else {
+          // Local Simulation Forgot Password
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.querySelector('.btn-text').textContent = originalText;
+            if (icon) icon.className = 'fa-solid fa-paper-plane login-icon';
+
+            // Check if mock user already exists
+            if (localStorage.getItem(`aiu_mock_pwd_${email}`)) {
+              showToast(`[本地模擬] 驗證信件已寄出！新密碼已被暫時更新重設為 "123456"`, 'fa-solid fa-paper-plane');
+              localStorage.setItem(`aiu_mock_pwd_${email}`, '123456');
+              setTimeout(() => {
+                backLoginLink.click();
+              }, 2500);
+            } else {
+              showToast('該電子信箱尚未註冊會員 (本地模擬)！', 'fa-solid fa-circle-xmark', true);
+            }
+          }, 1200);
         }
       });
     });
