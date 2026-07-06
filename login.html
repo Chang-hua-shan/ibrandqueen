@@ -392,11 +392,15 @@
 
         if (useFirebase) {
           firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then(async (userCredential) => {
+            .then((userCredential) => {
               const user = userCredential.user;
-              // Write subscription tier to database
-              await updateSubscriptionTier(user, tier);
+              // Write subscription tier to database in background
+              updateSubscriptionTier(user, tier).catch(err => {
+                console.error("[Register] Firestore tier write failed:", err);
+              });
+              
               showToast('帳戶註冊並訂閱成功！正在導入文章專區...', 'fa-solid fa-circle-check');
+              sessionStorage.setItem('aiu_member_auth', 'true');
               
               setTimeout(() => {
                 window.location.href = 'articles.html';
