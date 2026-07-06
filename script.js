@@ -249,25 +249,25 @@ document.addEventListener('DOMContentLoaded', () => {
 // Member Navbar Dynamic State Logic
 function initMemberNavbar() {
   const updateNavbarText = () => {
-    const navAdminLink = document.querySelector('.nav-admin-link');
+    const navAdminLinks = document.querySelectorAll('.nav-admin-link, #nav-login-btn');
     const footerAdminLink = document.querySelector('[data-i18n="footer_admin"]');
     const isAuthed = sessionStorage.getItem('aiu_member_auth') === 'true';
     
-    if (isAuthed) {
-      if (navAdminLink) {
-        navAdminLink.href = './articles.html';
-        navAdminLink.innerHTML = `<i class="fa-solid fa-book-open"></i> ${currentLang === 'zh' ? '專屬文章' : 'Articles'}`;
+    navAdminLinks.forEach(link => {
+      if (isAuthed) {
+        link.href = './articles.html';
+        link.innerHTML = `<i class="fa-solid fa-book-open"></i> ${currentLang === 'zh' ? '專屬文章' : 'Articles'}`;
+      } else {
+        link.href = './login.html';
+        link.innerHTML = `<i class="fa-solid fa-user-lock"></i> ${currentLang === 'zh' ? '會員登入' : 'Member Login'}`;
       }
-      if (footerAdminLink) {
+    });
+
+    if (footerAdminLink) {
+      if (isAuthed) {
         footerAdminLink.href = './articles.html';
         footerAdminLink.innerHTML = `<i class="fa-solid fa-book-open"></i> ${currentLang === 'zh' ? '進入專屬文章庫' : 'Member Articles'}`;
-      }
-    } else {
-      if (navAdminLink) {
-        navAdminLink.href = './login.html';
-        navAdminLink.innerHTML = `<i class="fa-solid fa-user-lock"></i> ${currentLang === 'zh' ? '會員登入' : 'Member Login'}`;
-      }
-      if (footerAdminLink) {
+      } else {
         footerAdminLink.href = './login.html';
         footerAdminLink.innerHTML = `<i class="fa-solid fa-circle-user"></i> ${currentLang === 'zh' ? '會員登入 / 註冊' : 'Login / Register'}`;
       }
