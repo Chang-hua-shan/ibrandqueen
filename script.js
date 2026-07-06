@@ -256,7 +256,7 @@ function initMemberNavbar() {
     navAdminLinks.forEach(link => {
       if (isAuthed) {
         link.href = './articles.html';
-        link.innerHTML = `<i class="fa-solid fa-book-open"></i> ${currentLang === 'zh' ? '專屬文章' : 'Articles'}`;
+        link.innerHTML = `<i class="fa-solid fa-book-open"></i> ${currentLang === 'zh' ? '會員專區' : 'Member Zone'}`;
       } else {
         link.href = './login.html';
         link.innerHTML = `<i class="fa-solid fa-user-lock"></i> ${currentLang === 'zh' ? '會員登入' : 'Member Login'}`;
