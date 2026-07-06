@@ -104,7 +104,16 @@ const translations = {
     card_toast_success: "訊息已成功傳送！我們會盡快與您聯絡。",
     card_modal_title: "掃描分享名片",
     card_modal_desc: "用手機相機掃描下方 QR Code，即可在手機上開啟品牌女王的數位名片。",
-    card_modal_close: "關閉視窗"
+    card_modal_close: "關閉視窗",
+    hero_title_static: "定義品牌高度",
+    orbit_tag_1: "👑 商業 IP 孵化",
+    orbit_tag_2: "✨ 整合行銷策略",
+    orbit_tag_3: "🤝 跨界商務對接",
+    orbit_tag_4: "💡 品牌 DNA 定位",
+    stat_exp: "年顧問資歷",
+    stat_clients: "企業菁英品牌孵化",
+    stat_matchings: "商務對接媒合",
+    stat_exposure: "媒體傳播曝光"
   },
   en: {
     nav_about: "About Queen",
@@ -198,7 +207,16 @@ const translations = {
     card_toast_success: "Message successfully sent! We will reach out soon.",
     card_modal_title: "Scan to Share Card",
     card_modal_desc: "Scan the QR code below with your phone camera to open the digital card immediately.",
-    card_modal_close: "Close"
+    card_modal_close: "Close",
+    hero_title_static: "Define Brand Heights",
+    orbit_tag_1: "👑 Business IP",
+    orbit_tag_2: "✨ Integrated Marketing",
+    orbit_tag_3: "🤝 Strategic Matchmaking",
+    orbit_tag_4: "💡 Brand DNA Positioning",
+    stat_exp: "Years Experience",
+    stat_clients: "Brands Incubated",
+    stat_matchings: "Business Matchings",
+    stat_exposure: "Media Impressions"
   }
 };
 
@@ -206,12 +224,15 @@ let currentLang = 'zh';
 
 // 2. Initial Setup on DOM Content Loaded
 document.addEventListener('DOMContentLoaded', () => {
+  initPreloader();
   initLanguage();
   initTheme();
   initNavbar();
   init3DTilt();
   initQRModal();
   initForms();
+  initTypewriter();
+  initScrollReveal();
 });
 
 // 3. Language Selector Logic
@@ -242,6 +263,11 @@ function initLanguage() {
       langSelects.forEach(other => {
         if (other !== select) other.value = currentLang;
       });
+      
+      // Update dynamic typewriter text for the new language
+      if (typeof initTypewriter === 'function') {
+        initTypewriter();
+      }
     });
   });
 }
@@ -382,44 +408,64 @@ function initNavbar() {
 
 // 6. Card 3D Tilt Hover Physics
 function init3DTilt() {
+  // 1. Digital Card Mockup Tilt
   const card = document.getElementById('digital-card-mockup');
-  if (!card) return;
+  if (card) {
+    card.addEventListener('click', () => {
+      window.location.href = 'card.html';
+    });
 
-  // Direct redirection when selecting the card mockup
-  card.addEventListener('click', () => {
-    window.location.href = 'card.html';
-  });
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = ((centerY - y) / centerY) * 10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+      
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+      
+      const glow = card.querySelector('.card-mockup-glow');
+      if (glow) {
+        const glowX = (x / rect.width) * 100;
+        const glowY = (y / rect.height) * 100;
+        glow.style.background = `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(139, 92, 246, 0.45) 0%, rgba(20, 16, 35, 0) 70%)`;
+      }
+    });
 
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    // Tilt angle range (-10 to +10 degrees)
-    const rotateX = ((centerY - y) / centerY) * 10;
-    const rotateY = ((x - centerX) / centerX) * 10;
-    
-    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
-    
-    // Animate gloss radial glow coordinates
-    const glow = card.querySelector('.card-mockup-glow');
-    if (glow) {
-      const glowX = (x / rect.width) * 100;
-      const glowY = (y / rect.height) * 100;
-      glow.style.background = `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(139, 92, 246, 0.45) 0%, rgba(20, 16, 35, 0) 70%)`;
-    }
-  });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+      const glow = card.querySelector('.card-mockup-glow');
+      if (glow) {
+        glow.style.background = 'radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(20, 16, 35, 0) 70%)';
+      }
+    });
+  }
 
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
-    const glow = card.querySelector('.card-mockup-glow');
-    if (glow) {
-      glow.style.background = 'radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(20, 16, 35, 0) 70%)';
-    }
-  });
+  // 2. Hero Portrait Frame Tilt
+  const portrait = document.getElementById('hero-portrait-frame');
+  if (portrait) {
+    portrait.addEventListener('mousemove', (e) => {
+      const rect = portrait.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = ((centerY - y) / centerY) * 8; // Slightly less rotation for elegant portrait frame
+      const rotateY = ((x - centerX) / centerX) * 8;
+      
+      portrait.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    });
+
+    portrait.addEventListener('mouseleave', () => {
+      portrait.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+    });
+  }
 }
 
 // 7. Share Dialog (QR Code Generation)
@@ -597,4 +643,118 @@ function initForms() {
       toast.classList.remove('show');
     }, 3800);
   }
+}
+
+// 9. Premium Preloader Control
+function initPreloader() {
+  const preloader = document.getElementById('preloader');
+  if (!preloader) return;
+  
+  // Hide preloader when page finishes loading (min display duration of 0.8s)
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      preloader.classList.add('fade-out');
+    }, 500);
+  });
+
+  // Fallback in case window load event doesn't fire or takes too long (timeout 1.5s)
+  setTimeout(() => {
+    if (!preloader.classList.contains('fade-out')) {
+      preloader.classList.add('fade-out');
+    }
+  }, 1500);
+}
+
+// 10. Dynamic Typewriter Headline Switcher
+let typewriterInterval = null;
+function initTypewriter() {
+  const typedTextSpan = document.getElementById('hero-typed-text');
+  if (!typedTextSpan) return;
+
+  const textArray = {
+    zh: [
+      "釋放商業影響力",
+      "打造自媒體商業 IP",
+      "倍增高端個人價值",
+      "對接跨界商務資源"
+    ],
+    en: [
+      "Amplify Commercial Influence",
+      "Build Self-Media Business IP",
+      "Amplify Premium Personal Value",
+      "Connect Global Business Network"
+    ]
+  };
+
+  const typingDelay = 100;
+  const erasingDelay = 50;
+  const newTextDelay = 2000; // Delay between texts
+  let textArrayIndex = 0;
+  let charIndex = 0;
+  let isErasing = false;
+
+  // Clear any existing intervals/timeouts from language switching
+  if (typewriterInterval) {
+    clearTimeout(typewriterInterval);
+  }
+
+  function type() {
+    const currentLangText = textArray[currentLang] || textArray['zh'];
+    
+    // Safety check if we switch languages and index is out of bounds
+    if (!currentLangText[textArrayIndex]) {
+      textArrayIndex = 0;
+    }
+    
+    const currentString = currentLangText[textArrayIndex];
+
+    if (!isErasing && charIndex < currentString.length) {
+      // Typing
+      typedTextSpan.textContent += currentString.charAt(charIndex);
+      charIndex++;
+      typewriterInterval = setTimeout(type, typingDelay);
+    } else if (isErasing && charIndex > 0) {
+      // Erasing
+      typedTextSpan.textContent = currentString.substring(0, charIndex - 1);
+      charIndex--;
+      typewriterInterval = setTimeout(type, erasingDelay);
+    } else if (!isErasing && charIndex === currentString.length) {
+      // Finished typing, pause before erasing
+      isErasing = true;
+      typewriterInterval = setTimeout(type, newTextDelay);
+    } else if (isErasing && charIndex === 0) {
+      // Finished erasing, move to next text
+      isErasing = false;
+      textArrayIndex = (textArrayIndex + 1) % currentLangText.length;
+      typewriterInterval = setTimeout(type, typingDelay + 500);
+    }
+  }
+
+  // Start typewriter
+  typedTextSpan.textContent = "";
+  type();
+}
+
+// 11. Intersection Observer Scroll Reveal Animation
+function initScrollReveal() {
+  const reveals = document.querySelectorAll('.reveal');
+  if (reveals.length === 0) return;
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        // Once revealed, we don't need to observe it anymore
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    root: null, // viewport
+    threshold: 0.15, // trigger when 15% of element is visible
+    rootMargin: "0px 0px -50px 0px" // trigger slightly before entering
+  });
+
+  reveals.forEach(reveal => {
+    revealObserver.observe(reveal);
+  });
 }

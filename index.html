@@ -31,6 +31,15 @@
 </head>
 <body class="light-theme">
 
+  <!-- Premium Page Preloader -->
+  <div id="preloader">
+    <div class="preloader-logo-wrapper">
+      <div class="preloader-ring"></div>
+      <i class="fa-solid fa-crown preloader-crown"></i>
+      <span class="preloader-text">iBrandQueen</span>
+    </div>
+  </div>
+
   <!-- Ambient Light Effects (Background Glow Spheres) -->
   <div class="glow-sphere sphere-1"></div>
   <div class="glow-sphere sphere-2"></div>
@@ -81,9 +90,11 @@
           <i class="fa-solid fa-gem"></i>
           <span data-i18n="hero_tag">PERSONAL BRAND CONSULTANT</span>
         </div>
-        <h1 class="hero-title" data-i18n="hero_title">
-          定義品牌高度<br>
-          <span class="gradient-text">釋放商業影響力</span>
+        <h1 class="hero-title">
+          <span data-i18n="hero_title_static">定義品牌高度</span><br>
+          <span class="typewriter-container gradient-text">
+            <span class="typed-text" id="hero-typed-text">釋放商業影響力</span><span class="cursor">&nbsp;</span>
+          </span>
         </h1>
         <p class="hero-desc" data-i18n="hero_desc">
           專為創辦人、企業菁英與高階主管量身規劃的個人品牌定位與整合行銷策略。我們透過多維度的定位診斷、社群IP孵化與高端公關對接，協助您在行業中建立無可替代的個人權威與商業影響力。
@@ -98,22 +109,40 @@
             <i class="fa-regular fa-calendar-check"></i>
           </a>
         </div>
+        
+        <!-- Hero Stats Bar (Social Proof) -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">10+</div>
+            <div class="stat-label" data-i18n="stat_exp">年顧問資歷</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">100+</div>
+            <div class="stat-label" data-i18n="stat_clients">企業菁英品牌孵化</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1,000+</div>
+            <div class="stat-label" data-i18n="stat_matchings">商務對接媒合</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">10k+</div>
+            <div class="stat-label" data-i18n="stat_exposure">媒體傳播曝光</div>
+          </div>
+        </div>
       </div>
       
       <div class="hero-visual">
+        <!-- Floating Orbit Tags -->
+        <div class="orbit-tag tag-1" data-i18n="orbit_tag_1">👑 商業 IP 孵化</div>
+        <div class="orbit-tag tag-2" data-i18n="orbit_tag_2">✨ 整合行銷策略</div>
+        <div class="orbit-tag tag-3" data-i18n="orbit_tag_3">🤝 跨界商務對接</div>
+        <div class="orbit-tag tag-4" data-i18n="orbit_tag_4">💡 品牌 DNA 定位</div>
+
         <div class="portrait-glow-ring"></div>
-        <div class="portrait-frame">
+        <div class="portrait-frame" id="hero-portrait-frame">
           <i class="fa-solid fa-crown crown-vector"></i>
           <div class="portrait-avatar-placeholder">
-            <svg class="cover-silhouette" viewBox="0 0 200 220" fill="none" style="width: 100%; height: 100%;">
-              <path d="M100 25 C122 25 140 43 140 65 C140 82 130 96 116 102 C142 113 160 137 162 165 H38 C40 137 58 113 84 102 C70 96 60 82 60 65 C60 43 78 25 100 25 Z" fill="url(#hero-avatar-grad)" />
-              <defs>
-                <linearGradient id="hero-avatar-grad" x1="100" y1="25" x2="100" y2="165" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#ff75a0"/>
-                  <stop offset="1" stop-color="#ff2a75"/>
-                </linearGradient>
-              </defs>
-            </svg>
+            <img src="assets/queen_portrait.png" alt="iBrandQueen 品牌女王" class="portrait-img">
           </div>
         </div>
       </div>
@@ -123,19 +152,11 @@
   <!-- About Section -->
   <section class="about" id="about">
     <div class="container about-grid">
-      <div class="about-visual">
+      <div class="about-visual reveal">
         <div class="portrait-glow-ring" style="width:110%; height:110%;"></div>
         <div class="portrait-frame" style="width: 320px; height: 400px;">
           <div class="portrait-avatar-placeholder">
-            <svg class="cover-silhouette" viewBox="0 0 200 220" fill="none" style="width: 90%; height: 90%;">
-              <path d="M100 25 C122 25 140 43 140 65 C140 82 130 96 116 102 C142 113 160 137 162 165 H38 C40 137 58 113 84 102 C70 96 60 82 60 65 C60 43 78 25 100 25 Z" fill="url(#about-avatar-grad)" />
-              <defs>
-                <linearGradient id="about-avatar-grad" x1="100" y1="25" x2="100" y2="165" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#f59e0b"/>
-                  <stop offset="1" stop-color="#d97706"/>
-                </linearGradient>
-              </defs>
-            </svg>
+            <img src="assets/queen_portrait.png" alt="iBrandQueen 品牌女王肖像" class="portrait-img">
           </div>
           <div class="experience-badge">
             <span class="exp-num">10+</span>
@@ -144,7 +165,7 @@
         </div>
       </div>
       
-      <div class="about-content">
+      <div class="about-content reveal reveal-delay-1">
         <span class="editorial-label" data-i18n="about_label">MEET IBRANDQUEEN</span>
         <h2 class="section-title" data-i18n="about_title">關於 iBrandQueen</h2>
         <div class="about-quote" data-i18n="about_quote">
@@ -182,7 +203,7 @@
   <!-- Services Section -->
   <section class="services" id="services">
     <div class="container">
-      <div class="section-title-wrapper">
+      <div class="section-title-wrapper reveal">
         <span class="editorial-label" data-i18n="services_label">EXPERT SERVICES</span>
         <h2 class="section-title" data-i18n="services_title">品牌服務生態</h2>
         <p class="section-subtitle" data-i18n="services_subtitle">我們提供一站式的專業個人行銷方案，從思維重塑、媒體曝光到商務資源對接，全方位開拓您的影響力版圖。</p>
@@ -191,7 +212,7 @@
       
       <div class="services-grid">
         <!-- Service Card 1 -->
-        <div class="glass-card service-card">
+        <div class="glass-card service-card reveal">
           <div class="service-icon-box">
             <i class="fa-solid fa-gem"></i>
           </div>
@@ -207,7 +228,7 @@
         </div>
         
         <!-- Service Card 2 -->
-        <div class="glass-card service-card">
+        <div class="glass-card service-card reveal reveal-delay-1">
           <div class="service-icon-box">
             <i class="fa-solid fa-chart-line"></i>
           </div>
@@ -223,7 +244,7 @@
         </div>
         
         <!-- Service Card 3 -->
-        <div class="glass-card service-card">
+        <div class="glass-card service-card reveal reveal-delay-2">
           <div class="service-icon-box">
             <i class="fa-solid fa-lightbulb"></i>
           </div>
@@ -244,7 +265,7 @@
   <!-- Connect Section (NFC Card Showcase) -->
   <section class="card-showcase" id="connect">
     <div class="container card-showcase-grid">
-      <div class="mockup-container">
+      <div class="mockup-container reveal">
         <!-- Interactive 3D Mockup -->
         <div class="card-mockup" id="digital-card-mockup" aria-label="點擊查看數位名片">
           <div class="card-mockup-glow"></div>
@@ -258,15 +279,7 @@
           
           <div class="mockup-body">
             <div class="mockup-avatar">
-              <svg class="mockup-avatar-svg" viewBox="0 0 200 220" fill="none">
-                <path d="M100 25 C122 25 140 43 140 65 C140 82 130 96 116 102 C142 113 160 137 162 165 H38 C40 137 58 113 84 102 C70 96 60 82 60 65 C60 43 78 25 100 25 Z" fill="url(#mockup-avatar-grad)" />
-                <defs>
-                  <linearGradient id="mockup-avatar-grad" x1="100" y1="25" x2="100" y2="165" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#f59e0b"/>
-                    <stop offset="1" stop-color="#ff2a75"/>
-                  </linearGradient>
-                </defs>
-              </svg>
+              <img src="assets/queen_portrait.png" alt="iBrandQueen 品牌女王肖像" class="mockup-avatar-img">
             </div>
             <h3 class="mockup-name" data-i18n="mockup_name">品牌女王</h3>
             <p class="mockup-title" data-i18n="mockup_title">Founder & Chief Consultant</p>
@@ -282,7 +295,7 @@
         </div>
       </div>
       
-      <div class="card-showcase-content">
+      <div class="card-showcase-content reveal reveal-delay-1">
         <span class="editorial-label" data-i18n="connect_label">DIGITAL BUSINESS CARD</span>
         <h2 class="section-title" data-i18n="connect_title">隨手對接商機，<br>隨時與女王保持聯絡</h2>
         <p class="about-p" data-i18n="connect_desc">
@@ -306,7 +319,7 @@
   <!-- Booking Section -->
   <section class="booking" id="booking">
     <div class="container booking-grid">
-      <div class="booking-info">
+      <div class="booking-info reveal">
         <span class="editorial-label" data-i18n="booking_label">CONSULTATION BOOKING</span>
         <h3 data-i18n="booking_headline">開啟您的品牌高度</h3>
         <p class="booking-desc" data-i18n="booking_desc">
@@ -347,7 +360,7 @@
       </div>
       
       <!-- Booking Form -->
-      <div class="glass-card form-card">
+      <div class="glass-card form-card reveal reveal-delay-1">
         <form class="booking-form" id="consultation-form" novalidate>
           <div class="form-row">
             <div class="form-group">
