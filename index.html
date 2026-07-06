@@ -58,7 +58,7 @@
         <li><a href="#services" class="nav-link" data-i18n="nav_services">品牌服務</a></li>
         <li><a href="#connect" class="nav-link" data-i18n="nav_connect">數位名片</a></li>
         <li><a href="#booking" class="nav-link" data-i18n="nav_booking">合作預約</a></li>
-        <li><a href="../行銷網站/login.html" class="nav-link nav-admin-link" data-i18n="nav_admin"><i class="fa-solid fa-lock"></i> 登入後台</a></li>
+        <li><a href="./login.html" class="nav-link nav-admin-link" data-i18n="nav_admin"><i class="fa-solid fa-user-lock"></i> 會員登入</a></li>
       </ul>
       
       <div class="nav-actions">
@@ -317,6 +317,85 @@
     </div>
   </section>
 
+  <!-- Pricing Section (Subscription Plans) -->
+  <section class="pricing-section" id="pricing">
+    <div class="container">
+      <div class="section-header text-center reveal" style="margin-bottom: 50px; text-align: center;">
+        <span class="editorial-label" data-i18n="pricing_label">MEMBERSHIP PLANS</span>
+        <h3 class="gradient-text" data-i18n="pricing_title" style="font-size: 32px; font-weight: 800;">選取您的品牌訂閱方案</h3>
+        <p data-i18n="pricing_subtitle" style="font-size: 14.5px; color: var(--text-muted); max-width: 600px; margin: 10px auto 0;">
+          訂閱專屬品牌行銷方案，立即解鎖相應等級的菁英商業 IP 定位、媒體曝光與跨界資源對接文章。
+        </p>
+      </div>
+
+      <div class="pricing-grid reveal">
+        <!-- Plan 1: Free -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <span class="plan-badge">FREE</span>
+            <h4 class="plan-title">免費會員方案</h4>
+            <div class="plan-price">
+              <span class="currency">$</span>
+              <span class="amount">0</span>
+              <span class="period">/ 永久</span>
+            </div>
+          </div>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check"></i> <span>閱讀「免費級別」品牌文章</span></li>
+            <li><i class="fa-solid fa-check"></i> <span>個人數位名片基礎功能</span></li>
+            <li><i class="fa-solid fa-check"></i> <span>預約一對一顧問初步諮詢</span></li>
+            <li class="disabled"><i class="fa-solid fa-xmark"></i> <span>解鎖自媒體 IP 深度企劃</span></li>
+            <li class="disabled"><i class="fa-solid fa-xmark"></i> <span>高端媒體公關採訪對接</span></li>
+          </ul>
+          <a href="./login.html" class="btn-plan-action">立即免費註冊</a>
+        </div>
+
+        <!-- Plan 2: Silver (Popular) -->
+        <div class="pricing-card popular">
+          <div class="popular-ribbon">熱門推薦</div>
+          <div class="pricing-header">
+            <span class="plan-badge silver">SILVER</span>
+            <h4 class="plan-title">白銀品牌方案</h4>
+            <div class="plan-price">
+              <span class="currency">$</span>
+              <span class="amount">980</span>
+              <span class="period">/ 月</span>
+            </div>
+          </div>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check"></i> <span>解鎖所有「白銀級別」文章</span></li>
+            <li><i class="fa-solid fa-check"></i> <span>自媒體商業 IP 孵化指南</span></li>
+            <li><i class="fa-solid fa-check"></i> <span>數位名片自訂背景與名片音樂</span></li>
+            <li><i class="fa-solid fa-check"></i> <span>每月自動匯出詢問數據報告</span></li>
+            <li class="disabled"><i class="fa-solid fa-xmark"></i> <span>高端媒體公關採訪對接</span></li>
+          </ul>
+          <a href="./login.html" class="btn-plan-action">立即訂閱方案</a>
+        </div>
+
+        <!-- Plan 3: Gold -->
+        <div class="pricing-card gold">
+          <div class="pricing-header">
+            <span class="plan-badge gold">GOLD</span>
+            <h4 class="plan-title">黃金精英方案</h4>
+            <div class="plan-price">
+              <span class="currency">$</span>
+              <span class="amount">2,680</span>
+              <span class="period">/ 月</span>
+            </div>
+          </div>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check"></i> <span>無限制解鎖「所有級別」文章</span></li>
+            <li><i class="fa-solid fa-check"></i> <span>高端主流媒體公關採訪對接</span></li>
+            <li><i class="fa-solid fa-check"></i> <span>尊榮商務媒合與跨界資源鏈結</span></li>
+            <li><i class="fa-solid fa-check"></i> <span>一對一專家品牌 DNA 深度診斷</span></li>
+            <li><i class="fa-solid fa-check"></i> <span>享用 VIP 線線下商務沙龍席位</span></li>
+          </ul>
+          <a href="./login.html" class="btn-plan-action">立即訂閱方案</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Booking Section -->
   <section class="booking" id="booking">
     <div class="container booking-grid">
@@ -435,7 +514,7 @@
           <li><a href="#services" data-i18n="nav_services">品牌服務</a></li>
           <li><a href="#connect" data-i18n="nav_connect">數位名片</a></li>
           <li><a href="#booking" data-i18n="nav_booking">合作預約</a></li>
-          <li><a href="../行銷網站/login.html" data-i18n="footer_admin"><i class="fa-solid fa-shield-halved"></i> 管理員登入</a></li>
+          <li><a href="./login.html" data-i18n="footer_admin"><i class="fa-solid fa-circle-user"></i> 會員登入 / 註冊</a></li>
         </ul>
       </div>
       
@@ -481,6 +560,12 @@
     <i class="fa-solid fa-circle-check toast-icon"></i>
     <span class="toast-message" data-i18n="toast_success">諮詢表單已成功送出！</span>
   </div>
+
+  <!-- Firebase SDK Compat -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 
   <!-- Javascript -->
   <script src="script.js"></script>

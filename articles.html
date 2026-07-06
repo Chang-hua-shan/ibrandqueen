@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iBrandQueen | 會員專屬文章中心</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    body.articles-page-body {
+      background: #FFF8F9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header User Panel */
+    .member-header {
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid rgba(233, 27, 98, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .member-nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    .member-user-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .user-badge {
+      background: rgba(233, 27, 98, 0.08);
+      border: 1px solid rgba(233, 27, 98, 0.2);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary-color);
+    }
+    
+    .user-badge.silver {
+      background: rgba(192, 192, 192, 0.15);
+      border-color: rgba(140, 140, 140, 0.4);
+      color: #708090;
+    }
+    
+    .user-badge.gold {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: rgba(212, 175, 55, 0.5);
+      color: #B8860B;
+    }
+    
+    .btn-logout {
+      background: none;
+      border: 1px solid rgba(180, 180, 180, 0.4);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    
+    .btn-logout:hover {
+      border-color: #ff3b30;
+      color: #ff3b30;
+      background: rgba(255, 59, 48, 0.02);
+    }
+    
+    /* Main Content Area */
+    .articles-hero {
+      text-align: center;
+      padding: 60px 24px 30px;
+    }
+    
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+    
+    /* Article Card */
+    .article-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(233, 27, 98, 0.08);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(233, 27, 98, 0.03);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 380px;
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    
+    .article-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(233, 27, 98, 0.08);
+      border-color: rgba(233, 27, 98, 0.15);
+    }
+    
+    .article-banner {
+      height: 160px;
+      background: linear-gradient(135deg, #FFF0F2 0%, #FFE0E6 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: var(--primary-color);
+      opacity: 0.8;
+    }
+    
+    .article-tier-tag {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 30px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .article-tier-tag.silver {
+      background: #708090;
+      color: #FFFFFF;
+    }
+    
+    .article-tier-tag.gold {
+      background: #B8860B;
+      color: #FFFFFF;
+    }
+    
+    .article-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    
+    .article-category {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    
+    .article-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+    
+    .article-excerpt {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: auto;
+    }
+    
+    .btn-read-article {
+      align-self: flex-start;
+      background: none;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 15px;
+    }
+    
+    .btn-read-article:hover {
+      background: var(--primary-color);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(233, 27, 98, 0.2);
+    }
+    
+    /* Lock Blur Overlay */
+    .article-lock-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .article-card.locked .article-lock-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .lock-icon-box {
+      width: 50px;
+      height: 50px;
+      background: rgba(233, 27, 98, 0.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--primary-color);
+      margin-bottom: 14px;
+      border: 1px solid rgba(233, 27, 98, 0.15);
+      animation: pulseLock 2s infinite;
+    }
+    
+    @keyframes pulseLock {
+      0% { box-shadow: 0 0 0 0 rgba(233, 27, 98, 0.2); }
+      70% { box-shadow: 0 0 0 10px rgba(233, 27, 98, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(233, 27, 98, 0); }
+    }
+    
+    .lock-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    
+    .lock-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    
+    .btn-upgrade-action {
+      background: var(--grad-primary);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(233, 27, 98, 0.2);
+      transition: all 0.2s ease;
+    }
+    
+    .btn-upgrade-action:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(233, 27, 98, 0.3);
+    }
+    
+    /* Simulated upgrade tools box in dev simulation */
+    .sim-panel {
+      background: #FFFFFF;
+      border: 1px dashed rgba(233, 27, 98, 0.3);
+      border-radius: 12px;
+      padding: 14px;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    
+    .sim-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .sim-btn {
+      background: rgba(233, 27, 98, 0.05);
+      border: 1px solid rgba(233, 27, 98, 0.15);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .sim-btn:hover, .sim-btn.active {
+      background: var(--primary-color);
+      color: #FFFFFF;
+      border-color: var(--primary-color);
+    }
+    
+    /* Floating back home */
+    .back-home-float {
+      margin-right: auto;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .back-home-float i {
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+<body class="articles-page-body light-theme">
+
+  <!-- Glow Backgrounds -->
+  <div class="glow-sphere sphere-1" style="top: 15%; left: 5%; width: 250px; height: 250px;"></div>
+  <div class="glow-sphere sphere-3" style="bottom: 10%; right: 5%; width: 300px; height: 300px;"></div>
+
+  <!-- Member User Bar -->
+  <header class="member-header">
+    <div class="member-nav-container">
+      <a href="index.html" class="back-home-float">
+        <i class="fa-solid fa-crown"></i>
+        <span>iBrandQueen</span>
+      </a>
+      
+      <div class="member-user-box" id="member-user-box">
+        <span id="user-email-display" style="font-size: 13.5px; font-weight: 500; color: var(--text-secondary);">載入會員帳戶中...</span>
+        <span class="user-badge" id="user-tier-display">
+          <i class="fa-solid fa-gem"></i> <span id="tier-text">免費會員</span>
+        </span>
+        <button class="btn-logout" id="btn-member-logout">
+          <i class="fa-solid fa-right-from-bracket"></i> <span>登出</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Content -->
+  <section class="articles-hero">
+    <h1 class="gradient-text" style="font-size: 32px; font-weight: 800; margin-bottom: 8px;">專屬商業定位文章庫</h1>
+    <p style="font-size: 14.5px; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+      閱讀品牌定位診斷、社群 IP 孵化、高端媒體公關與資源對接的深度策略，助力您的商業高度。
+    </p>
+  </section>
+
+  <!-- Simulation Sandbox Panel (Visible to help testing) -->
+  <div class="sim-panel" id="simulation-panel">
+    <div><strong>💡 會員方案模擬測試沙盒：</strong> 您可以隨時點選下方按鈕，在本地即時變更您的訂閱等級，並觀看下方文章遮罩解鎖的動態效果！</div>
+    <div class="sim-buttons">
+      <button class="sim-btn" onclick="simChangeTier('Free')">免費會員 (Free)</button>
+      <button class="sim-btn" onclick="simChangeTier('Silver')">🥈 白銀品牌方案 (Silver)</button>
+      <button class="sim-btn" onclick="simChangeTier('Gold')">👑 黃金精英方案 (Gold)</button>
+    </div>
+  </div>
+
+  <!-- Articles Cards Feed Grid -->
+  <main class="articles-grid" id="articles-container">
+    
+    <!-- Card 1 (Free) -->
+    <div class="article-card" data-required-tier="Free">
+      <div class="article-banner">📖</div>
+      <div class="article-tier-tag"><i class="fa-regular fa-eye"></i> 免費公開</div>
+      <div class="article-body">
+        <div class="article-category">品牌策略 / BRAND</div>
+        <h3 class="article-title">創辦人個人品牌重塑的黃金法則</h3>
+        <p class="article-excerpt">如何在行銷戰中脫穎而出？本篇將解構定位診斷心法，帶您梳理核心競爭力優勢，並為自己貼上高溢價的商務標籤。</p>
+        <button class="btn-read-article" onclick="readArticle('創辦人個人品牌重塑的黃金法則')">
+          <span>開始閱讀</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+      <!-- Lock Overlay -->
+      <div class="article-lock-overlay">
+        <div class="lock-icon-box"><i class="fa-solid fa-lock"></i></div>
+        <div class="lock-title">專屬方案內容</div>
+        <div class="lock-desc">升級您的方案即可閱讀此文章。</div>
+        <button class="btn-upgrade-action" onclick="upgradePrompt()">立即訂閱方案</button>
+      </div>
+    </div>
+
+    <!-- Card 2 (Silver) -->
+    <div class="article-card" data-required-tier="Silver">
+      <div class="article-banner">💡</div>
+      <div class="article-tier-tag silver"><i class="fa-solid fa-award"></i> 白銀專屬</div>
+      <div class="article-body">
+        <div class="article-category">IP 孵化 / IP CREATION</div>
+        <h3 class="article-title">打造高變現價值的個人商業 IP 矩陣</h3>
+        <p class="article-excerpt">解密如何將專業知識結構化，設計出受眾高黏著度的自媒體影音內容，建立穩定且持續轉化的商務變現管道。</p>
+        <button class="btn-read-article" onclick="readArticle('打造高變現價值的個人商業 IP 矩陣')">
+          <span>開始閱讀</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+      <!-- Lock Overlay -->
+      <div class="article-lock-overlay">
+        <div class="lock-icon-box"><i class="fa-solid fa-lock"></i></div>
+        <div class="lock-title">🥈 白銀方案專屬內容</div>
+        <div class="lock-desc">本文章適合自媒體與商業 IP 孵化之白銀訂閱會員閱讀。</div>
+        <button class="btn-upgrade-action" onclick="upgradePrompt('Silver')">訂閱白銀方案解鎖</button>
+      </div>
+    </div>
+
+    <!-- Card 3 (Gold) -->
+    <div class="article-card" data-required-tier="Gold">
+      <div class="article-banner">👑</div>
+      <div class="article-tier-tag gold"><i class="fa-solid fa-crown"></i> 黃金專屬</div>
+      <div class="article-body">
+        <div class="article-category">公關宣傳 / PUBLIC RELATIONS</div>
+        <h3 class="article-title">主流媒體公關採訪企劃指南與對接心法</h3>
+        <p class="article-excerpt">剖析主流商業與財經媒體記者的選題邏輯，手把手帶您包裝個人專題故事，成功獲取高端大眾曝光與業界權威公信力。</p>
+        <button class="btn-read-article" onclick="readArticle('主流媒體公關採訪企劃指南與對接心法')">
+          <span>開始閱讀</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+      <!-- Lock Overlay -->
+      <div class="article-lock-overlay">
+        <div class="lock-icon-box"><i class="fa-solid fa-lock"></i></div>
+        <div class="lock-title">👑 黃金方案專屬內容</div>
+        <div class="lock-desc">解密高端公關與媒體採訪對接心法，限黃金級精英會員閱讀。</div>
+        <button class="btn-upgrade-action" onclick="upgradePrompt('Gold')">訂閱黃金方案解鎖</button>
+      </div>
+    </div>
+
+    <!-- Card 4 (Gold) -->
+    <div class="article-card" data-required-tier="Gold">
+      <div class="article-banner">🤝</div>
+      <div class="article-tier-tag gold"><i class="fa-solid fa-crown"></i> 黃金專屬</div>
+      <div class="article-body">
+        <div class="article-category">資源媒合 / NETWORKING</div>
+        <h3 class="article-title">跨界資源鏈結：創辦人精準對接的商業閉環</h3>
+        <p class="article-excerpt">實用社交與資源對接指南，教您如何在高端商業環境中有效破冰、梳理彼此資源痛點，進而快速達成合作閉環。</p>
+        <button class="btn-read-article" onclick="readArticle('跨界資源鏈結：創辦人精準對接的商業閉環')">
+          <span>開始閱讀</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+      <!-- Lock Overlay -->
+      <div class="article-lock-overlay">
+        <div class="lock-icon-box"><i class="fa-solid fa-lock"></i></div>
+        <div class="lock-title">👑 黃金方案專屬內容</div>
+        <div class="lock-desc">提供商業領袖跨界資源鏈結與合夥人對接指引，限黃金會員閱讀。</div>
+        <button class="btn-upgrade-action" onclick="upgradePrompt('Gold')">訂閱黃金方案解鎖</button>
+      </div>
+    </div>
+
+    <!-- Card 5 (Silver) -->
+    <div class="article-card" data-required-tier="Silver">
+      <div class="article-banner">🎥</div>
+      <div class="article-tier-tag silver"><i class="fa-solid fa-award"></i> 白銀專屬</div>
+      <div class="article-body">
+        <div class="article-category">IP 孵化 / IP CREATION</div>
+        <h3 class="article-title">自媒體 IP 短影音定位與主題企劃模版</h3>
+        <p class="article-excerpt">精選 10 套爆款短影音開頭與內容框架，包含餐飲創辦人、顧問、金融菁英的客製化影音定位模板。</p>
+        <button class="btn-read-article" onclick="readArticle('自媒體 IP 短影音定位與主題企劃模版')">
+          <span>開始閱讀</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+      <!-- Lock Overlay -->
+      <div class="article-lock-overlay">
+        <div class="lock-icon-box"><i class="fa-solid fa-lock"></i></div>
+        <div class="lock-title">🥈 白銀方案專屬內容</div>
+        <div class="lock-desc">短影音文案架構與定位指南，白銀級以上會員專享。</div>
+        <button class="btn-upgrade-action" onclick="upgradePrompt('Silver')">訂閱白銀方案解鎖</button>
+      </div>
+    </div>
+
+    <!-- Card 6 (Free) -->
+    <div class="article-card" data-required-tier="Free">
+      <div class="article-banner">🧬</div>
+      <div class="article-tier-tag"><i class="fa-regular fa-eye"></i> 免費公開</div>
+      <div class="article-body">
+        <div class="article-category">品牌策略 / BRAND</div>
+        <h3 class="article-title">個人品牌 DNA 定位的核心三大維度</h3>
+        <p class="article-excerpt">在著手進行公關宣傳與影音曝光前，必須釐清的三個自我探問，為您的個人影響力工程打下堅固地基。</p>
+        <button class="btn-read-article" onclick="readArticle('個人品牌 DNA 定位的核心三大維度')">
+          <span>開始閱讀</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+      <!-- Lock Overlay -->
+      <div class="article-lock-overlay">
+        <div class="lock-icon-box"><i class="fa-solid fa-lock"></i></div>
+        <div class="lock-title">專屬方案內容</div>
+        <div class="lock-desc">升級您的方案即可閱讀此文章。</div>
+        <button class="btn-upgrade-action" onclick="upgradePrompt()">立即訂閱方案</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast Notification Overlay -->
+  <div class="toast" id="toast-notification">
+    <i class="fa-solid fa-circle-check toast-icon"></i>
+    <span class="toast-message">載入成功！</span>
+  </div>
+
+  <!-- Firebase SDK Compat -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <!-- Articles Page Controller Logic -->
+  <script>
+    // Global User State variables
+    let currentUser = null;
+    let currentUserTier = 'Free'; // Default
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const userEmailDisplay = document.getElementById('user-email-display');
+      const userTierDisplay = document.getElementById('user-tier-display');
+      const tierText = document.getElementById('tier-text');
+      const btnLogout = document.getElementById('btn-member-logout');
+      const toast = document.getElementById('toast-notification');
+
+      // 1. Toast Alert Helper
+      function showToast(message, iconClass = 'fa-solid fa-circle-check', isWarning = false) {
+        const toastIcon = toast.querySelector('.toast-icon');
+        const toastMessage = toast.querySelector('.toast-message');
+        toastIcon.className = `${iconClass} toast-icon`;
+        toastIcon.style.color = isWarning ? '#e91b62' : 'var(--primary-color)';
+        toastMessage.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+
+      // 2. Member Route Protection / State Sync
+      if (useFirebase) {
+        firebase.auth().onAuthStateChanged(async (user) => {
+          if (user) {
+            currentUser = user;
+            userEmailDisplay.textContent = `會員信箱：${user.email}`;
+            
+            // Fetch real tier from database
+            currentUserTier = await getSubscriptionTier(user);
+            updateUserTierUI(currentUserTier);
+            evaluateArticlesLock(currentUserTier);
+          } else {
+            console.log("[Articles] Not logged in. Redirecting to login.html...");
+            sessionStorage.removeItem('aiu_member_auth');
+            window.location.href = 'login.html';
+          }
+        });
+      } else {
+        // Local Simulation mode load user state
+        const localUser = localStorage.getItem('aiu_mock_logged_user');
+        const isAuthed = sessionStorage.getItem('aiu_member_auth') === 'true';
+        
+        if (!isAuthed || !localUser) {
+          console.log("[Articles] Simulation: No local session. Redirecting to login.html...");
+          window.location.href = 'login.html';
+        } else {
+          currentUser = { email: localUser };
+          userEmailDisplay.textContent = `會員信箱：${localUser} (模擬模式)`;
+          
+          currentUserTier = localStorage.getItem(`aiu_tier_${localUser}`) || 'Free';
+          updateUserTierUI(currentUserTier);
+          evaluateArticlesLock(currentUserTier);
+        }
+      }
+
+      // 3. Evaluate Article Lock status
+      function evaluateArticlesLock(tier) {
+        const cards = document.querySelectorAll('.article-card');
+        
+        cards.forEach(card => {
+          const reqTier = card.getAttribute('data-required-tier');
+          
+          let locked = false;
+          if (reqTier === 'Silver' && tier === 'Free') {
+            locked = true;
+          } else if (reqTier === 'Gold' && (tier === 'Free' || tier === 'Silver')) {
+            locked = true;
+          }
+          
+          if (locked) {
+            card.classList.add('locked');
+          } else {
+            card.classList.remove('locked');
+          }
+        });
+      }
+
+      // 4. Update UI Badge for Subscription Tier
+      function updateUserTierUI(tier) {
+        // Reset classes
+        userTierDisplay.className = 'user-badge';
+        
+        if (tier === 'Silver') {
+          userTierDisplay.classList.add('silver');
+          tierText.textContent = '🥈 白銀方案';
+          document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.sim-btn')[1].classList.add('active');
+        } else if (tier === 'Gold') {
+          userTierDisplay.classList.add('gold');
+          tierText.textContent = '👑 黃金精英';
+          document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.sim-btn')[2].classList.add('active');
+        } else {
+          tierText.textContent = '免費會員';
+          document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.sim-btn')[0].classList.add('active');
+        }
+      }
+
+      // 5. Simulated Sandboxed Upgrade Function
+      window.simChangeTier = async (newTier) => {
+        if (!currentUser) return;
+        
+        currentUserTier = newTier;
+        updateUserTierUI(newTier);
+        evaluateArticlesLock(newTier);
+        showToast(`您的模擬等級已即時變更為 [${newTier}]，文章鎖定狀態已更新！`, 'fa-solid fa-wand-magic-sparkles');
+        
+        // Persist setting
+        await updateSubscriptionTier(currentUser, newTier);
+      };
+
+      // 6. Read article alert
+      window.readArticle = (title) => {
+        showToast(`✨ 正在開啟文章《${title}》的全文閱讀，請盡情研讀！`, 'fa-solid fa-book-open');
+      };
+
+      // 7. Click lock prompt
+      window.upgradePrompt = async (upgradeTier = '') => {
+        if (!currentUser) return;
+        
+        if (confirm(`🏆 您想要升級至 [${upgradeTier || '白銀/黃金'}] 方案以立即解鎖此深度文章嗎？\n\n(在沙盒模擬環境下，點擊確認即可立即在瀏覽器中自動升級！)`)) {
+          const target = upgradeTier || 'Silver';
+          await simChangeTier(target);
+          showToast(`恭喜升級成功！已為您解鎖 ${target} 等級的文章內容！`, 'fa-solid fa-crown');
+        }
+      };
+
+      // 8. Logout Event
+      btnLogout.addEventListener('click', () => {
+        if (useFirebase) {
+          firebase.auth().signOut()
+            .then(() => {
+              sessionStorage.removeItem('aiu_member_auth');
+              window.location.href = 'login.html';
+            })
+            .catch(err => {
+              console.error("[Logout] Firebase Error:", err);
+              sessionStorage.removeItem('aiu_member_auth');
+              window.location.href = 'login.html';
+            });
+        } else {
+          sessionStorage.removeItem('aiu_member_auth');
+          window.location.href = 'login.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

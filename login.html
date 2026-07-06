@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iBrandQueen | 會員中心</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* Premium Login Page Overrides */
+    body.login-page-body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: #FFF5F7;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    .login-container {
+      width: 100%;
+      max-width: 450px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(233, 27, 98, 0.15);
+      border-radius: 24px;
+      padding: 40px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(233, 27, 98, 0.06), 
+                  inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+      z-index: 10;
+      position: relative;
+      transition: all 0.4s ease;
+    }
+    
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .login-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-primary);
+      text-decoration: none;
+      margin-bottom: 8px;
+    }
+    
+    .login-logo i {
+      color: var(--primary-color);
+      filter: drop-shadow(0 2px 8px rgba(233, 27, 98, 0.3));
+    }
+    
+    .login-subtitle {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    
+    .auth-tabs {
+      display: flex;
+      background: rgba(233, 27, 98, 0.05);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(233, 27, 98, 0.03);
+    }
+    
+    .auth-tab {
+      flex: 1;
+      border: none;
+      background: none;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    
+    .auth-tab.active {
+      background: #FFFFFF;
+      color: var(--primary-color);
+      box-shadow: 0 4px 12px rgba(233, 27, 98, 0.1);
+    }
+    
+    .auth-form {
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+    }
+    
+    .auth-form.active {
+      display: flex;
+    }
+    
+    .login-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .login-form-label {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+    
+    .login-input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    
+    .login-input-wrapper i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 14px;
+      pointer-events: none;
+    }
+    
+    .login-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(233, 27, 98, 0.12);
+      border-radius: 12px;
+      padding: 11px 16px 11px 40px;
+      font-size: 14px;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+    
+    .login-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(233, 27, 98, 0.08);
+    }
+    
+    .login-select {
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+    
+    .select-arrow {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    
+    .btn-auth-submit {
+      width: 100%;
+      background: var(--grad-primary);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(233, 27, 98, 0.25);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    .btn-auth-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(233, 27, 98, 0.35);
+    }
+    
+    .btn-auth-submit:disabled {
+      background: rgba(180, 180, 180, 0.6);
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .auth-footer-links {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12.5px;
+    }
+    
+    .auth-footer-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .auth-footer-link:hover {
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+<body class="login-page-body light-theme">
+
+  <!-- Glow Spheres -->
+  <div class="glow-sphere sphere-1" style="top: 10%; left: 10%; width: 250px; height: 250px;"></div>
+  <div class="glow-sphere sphere-2" style="bottom: 10%; right: 10%; width: 300px; height: 300px;"></div>
+
+  <!-- Login Card Container -->
+  <div class="login-container">
+    <div class="login-header">
+      <a href="index.html" class="login-logo">
+        <i class="fa-solid fa-crown"></i>
+        <span>iBrandQueen</span>
+      </a>
+      <div class="login-subtitle">高端個人品牌訂閱文章專區</div>
+    </div>
+
+    <!-- Toggle Tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login-btn">會員登入</button>
+      <button class="auth-tab" id="tab-register-btn">註冊新帳號</button>
+    </div>
+
+    <!-- Form 1: Login -->
+    <form class="auth-form active" id="login-form">
+      <div class="login-form-group">
+        <label class="login-form-label" for="login-email">電子信箱 Address</label>
+        <div class="login-input-wrapper">
+          <i class="fa-regular fa-envelope"></i>
+          <input type="email" id="login-email" class="login-input" placeholder="請輸入電子信箱" required>
+        </div>
+      </div>
+      <div class="login-form-group">
+        <label class="login-form-label" for="login-password">密碼 Password</label>
+        <div class="login-input-wrapper">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="login-password" class="login-input" placeholder="請輸入登入密碼" required>
+        </div>
+      </div>
+      <button type="submit" class="btn-auth-submit" id="btn-login-submit">
+        <span class="btn-text">立即登入 會員專區</span>
+        <i class="fa-solid fa-right-to-bracket login-icon"></i>
+      </button>
+    </form>
+
+    <!-- Form 2: Register -->
+    <form class="auth-form" id="register-form">
+      <div class="login-form-group">
+        <label class="login-form-label" for="register-email">註冊信箱 Email</label>
+        <div class="login-input-wrapper">
+          <i class="fa-regular fa-envelope"></i>
+          <input type="email" id="register-email" class="login-input" placeholder="請填寫有效電子信箱" required>
+        </div>
+      </div>
+      <div class="login-form-group">
+        <label class="login-form-label" for="register-password">安全密碼 Password</label>
+        <div class="login-input-wrapper">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="register-password" class="login-input" placeholder="設定至少 6 位數密碼" required>
+        </div>
+      </div>
+      
+      <!-- Selection of subscription tier to let user try out unlocking -->
+      <div class="login-form-group">
+        <label class="login-form-label" for="register-tier">選取訂閱方案 Plan Level</label>
+        <div class="login-input-wrapper">
+          <i class="fa-solid fa-crown" style="color: #DAA520;"></i>
+          <select id="register-tier" class="login-input login-select" required>
+            <option value="Free">免費會員方案 (Free Tier)</option>
+            <option value="Silver">白銀品牌方案 (Silver Tier)</option>
+            <option value="Gold">黃金精英方案 (Gold Tier)</option>
+          </select>
+          <i class="fa-solid fa-chevron-down select-arrow"></i>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn-auth-submit" id="btn-register-submit">
+        <span class="btn-text">建立帳戶並訂閱方案</span>
+        <i class="fa-solid fa-user-plus login-icon"></i>
+      </button>
+    </form>
+
+    <!-- Back to homepage link -->
+    <div class="auth-footer-links">
+      <a href="index.html" class="auth-footer-link">
+        <i class="fa-solid fa-arrow-left"></i> 回到官方首頁
+      </a>
+    </div>
+  </div>
+
+  <!-- Toast Notification Overlay -->
+  <div class="toast" id="toast-notification">
+    <i class="fa-solid fa-circle-check toast-icon"></i>
+    <span class="toast-message">作業成功！</span>
+  </div>
+
+  <!-- Firebase SDK Compat -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <!-- Login Logic Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabLoginBtn = document.getElementById('tab-login-btn');
+      const tabRegisterBtn = document.getElementById('tab-register-btn');
+      const loginForm = document.getElementById('login-form');
+      const registerForm = document.getElementById('register-form');
+      const toast = document.getElementById('toast-notification');
+
+      // 1. Tab Switch Logic
+      tabLoginBtn.addEventListener('click', () => {
+        tabLoginBtn.classList.add('active');
+        tabRegisterBtn.classList.remove('active');
+        loginForm.classList.add('active');
+        registerForm.classList.remove('active');
+      });
+
+      tabRegisterBtn.addEventListener('click', () => {
+        tabRegisterBtn.classList.add('active');
+        tabLoginBtn.classList.remove('active');
+        registerForm.classList.add('active');
+        loginForm.classList.remove('active');
+      });
+
+      // 2. Toast Notification Helper
+      function showToast(message, iconClass = 'fa-solid fa-circle-check', isError = false) {
+        const toastIcon = toast.querySelector('.toast-icon');
+        const toastMessage = toast.querySelector('.toast-message');
+        
+        toastIcon.className = `${iconClass} toast-icon`;
+        if (isError) {
+          toastIcon.style.color = '#ff3b30';
+          toast.style.borderColor = 'rgba(255, 59, 48, 0.2)';
+        } else {
+          toastIcon.style.color = 'var(--primary-color)';
+          toast.style.borderColor = 'rgba(233, 27, 98, 0.15)';
+        }
+        
+        toastMessage.textContent = message;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3500);
+      }
+
+      // 3. User Register Handler
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('register-email').value.trim();
+        const password = document.getElementById('register-password').value.trim();
+        const tier = document.getElementById('register-tier').value;
+        const submitBtn = document.getElementById('btn-register-submit');
+        const originalText = submitBtn.querySelector('.btn-text').textContent;
+        const icon = submitBtn.querySelector('.login-icon');
+
+        if (password.length < 6) {
+          showToast('安全密碼長度必須至少為 6 位數！', 'fa-solid fa-triangle-exclamation', true);
+          return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.querySelector('.btn-text').textContent = '帳戶建立中...';
+        if (icon) icon.className = 'fa-solid fa-spinner fa-spin login-icon';
+
+        if (useFirebase) {
+          firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(async (userCredential) => {
+              const user = userCredential.user;
+              // Write subscription tier to database
+              await updateSubscriptionTier(user, tier);
+              showToast('帳戶註冊並訂閱成功！正在導入文章專區...', 'fa-solid fa-circle-check');
+              
+              setTimeout(() => {
+                window.location.href = 'articles.html';
+              }, 1500);
+            })
+            .catch((error) => {
+              console.error("[Register] Error:", error);
+              submitBtn.disabled = false;
+              submitBtn.querySelector('.btn-text').textContent = originalText;
+              if (icon) icon.className = 'fa-solid fa-user-plus login-icon';
+              
+              let msg = '註冊失敗，請確認網路連線與輸入格式！';
+              if (error.code === 'auth/email-already-in-use') {
+                msg = '該電子信箱已被註冊使用！';
+              } else if (error.code === 'auth/invalid-email') {
+                msg = '信箱格式不正確，請重新輸入！';
+              }
+              showToast(msg, 'fa-solid fa-circle-xmark', true);
+            });
+        } else {
+          // Local Simulation Register
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.querySelector('.btn-text').textContent = originalText;
+            if (icon) icon.className = 'fa-solid fa-user-plus login-icon';
+
+            // Check if mock user already exists
+            if (localStorage.getItem(`aiu_mock_pwd_${email}`)) {
+              showToast('該電子信箱已被註冊使用 (本地模擬)！', 'fa-solid fa-circle-xmark', true);
+              return;
+            }
+
+            // Save details locally
+            localStorage.setItem(`aiu_mock_pwd_${email}`, password);
+            localStorage.setItem(`aiu_tier_${email}`, tier);
+            localStorage.setItem('aiu_mock_logged_user', email);
+            sessionStorage.setItem('aiu_member_auth', 'true');
+            
+            showToast('註冊並訂閱成功 (本地模擬)！正在導入文章專區...', 'fa-solid fa-circle-check');
+            setTimeout(() => {
+              window.location.href = 'articles.html';
+            }, 1500);
+          }, 1000);
+        }
+      });
+
+      // 4. User Login Handler
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value.trim();
+        const submitBtn = document.getElementById('btn-login-submit');
+        const originalText = submitBtn.querySelector('.btn-text').textContent;
+        const icon = submitBtn.querySelector('.login-icon');
+
+        submitBtn.disabled = true;
+        submitBtn.querySelector('.btn-text').textContent = '登入驗證中...';
+        if (icon) icon.className = 'fa-solid fa-spinner fa-spin login-icon';
+
+        if (useFirebase) {
+          firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+              showToast('登入成功！正在載入專屬內容...', 'fa-solid fa-circle-check');
+              sessionStorage.setItem('aiu_member_auth', 'true');
+              setTimeout(() => {
+                window.location.href = 'articles.html';
+              }, 1500);
+            })
+            .catch((error) => {
+              console.error("[Login] Error:", error);
+              submitBtn.disabled = false;
+              submitBtn.querySelector('.btn-text').textContent = originalText;
+              if (icon) icon.className = 'fa-solid fa-right-to-bracket login-icon';
+              
+              let msg = '電子信箱或密碼錯誤！';
+              if (error.code === 'auth/invalid-email') {
+                msg = '信箱格式不正確，請重新輸入！';
+              } else if (error.code === 'auth/too-many-requests') {
+                msg = '多次登入失敗，帳戶已被暫時鎖定！';
+              }
+              showToast(msg, 'fa-solid fa-circle-xmark', true);
+            });
+        } else {
+          // Local Simulation Login
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.querySelector('.btn-text').textContent = originalText;
+            if (icon) icon.className = 'fa-solid fa-right-to-bracket login-icon';
+
+            const savedPwd = localStorage.getItem(`aiu_mock_pwd_${email}`);
+            if (savedPwd && savedPwd === password) {
+              showToast('登入成功 (本地模擬)！正在載入專屬內容...', 'fa-solid fa-circle-check');
+              localStorage.setItem('aiu_mock_logged_user', email);
+              sessionStorage.setItem('aiu_member_auth', 'true');
+              setTimeout(() => {
+                window.location.href = 'articles.html';
+              }, 1500);
+            } else {
+              showToast('電子信箱或密碼錯誤 (本地模擬)！', 'fa-solid fa-circle-xmark', true);
+            }
+          }, 1000);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

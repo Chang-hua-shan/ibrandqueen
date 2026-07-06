@@ -17,7 +17,10 @@ const translations = {
     nav_services: "品牌服務",
     nav_connect: "數位名片",
     nav_booking: "合作預約",
-    nav_admin: "登入後台",
+    nav_admin: "會員登入",
+    pricing_label: "MEMBERSHIP PLANS",
+    pricing_title: "選取您的品牌訂閱方案",
+    pricing_subtitle: "訂閱專屬品牌行銷方案，立即解鎖相應等級的菁英商業 IP 定位、媒體曝光與跨界資源對接文章。",
     hero_tag: "PERSONAL BRAND CONSULTANT",
     hero_title: "定義品牌高度<br><span class=\"gradient-text\">釋放商業影響力</span>",
     hero_desc: "專為創辦人、企業菁英與高階主管量身規劃的個人品牌定位與整合行銷策略。我們透過多維度的定位診斷、社群IP孵化與高端公關對接，協助您在行業中建立無可替代的個人權威與商業影響力。",
@@ -122,7 +125,10 @@ const translations = {
     nav_services: "Services",
     nav_connect: "Digital Card",
     nav_booking: "Booking",
-    nav_admin: "Admin Login",
+    nav_admin: "Member Login",
+    pricing_label: "MEMBERSHIP PLANS",
+    pricing_title: "Select Your Subscription Plan",
+    pricing_subtitle: "Subscribe to unlock premium articles on personal branding IP positioning, media exposure, and resource matchmaking.",
     hero_tag: "PERSONAL BRAND CONSULTANT",
     hero_title: "Define Brand Heights<br><span class=\"gradient-text\">Amplify Commercial Influence</span>",
     hero_desc: "Tailored branding and marketing strategies for founders and executives. We construct irreplaceable authority and commercial impact through multi-dimensional diagnosis, social media IP incubation, and premium PR alignment.",
@@ -237,7 +243,58 @@ document.addEventListener('DOMContentLoaded', () => {
   initForms();
   initTypewriter();
   initScrollReveal();
+  initMemberNavbar();
 });
+
+// Member Navbar Dynamic State Logic
+function initMemberNavbar() {
+  const updateNavbarText = () => {
+    const navAdminLink = document.querySelector('.nav-admin-link');
+    const footerAdminLink = document.querySelector('[data-i18n="footer_admin"]');
+    const isAuthed = sessionStorage.getItem('aiu_member_auth') === 'true';
+    
+    if (isAuthed) {
+      if (navAdminLink) {
+        navAdminLink.href = './articles.html';
+        navAdminLink.innerHTML = `<i class="fa-solid fa-book-open"></i> ${currentLang === 'zh' ? '專屬文章' : 'Articles'}`;
+      }
+      if (footerAdminLink) {
+        footerAdminLink.href = './articles.html';
+        footerAdminLink.innerHTML = `<i class="fa-solid fa-book-open"></i> ${currentLang === 'zh' ? '進入專屬文章庫' : 'Member Articles'}`;
+      }
+    } else {
+      if (navAdminLink) {
+        navAdminLink.href = './login.html';
+        navAdminLink.innerHTML = `<i class="fa-solid fa-user-lock"></i> ${currentLang === 'zh' ? '會員登入' : 'Member Login'}`;
+      }
+      if (footerAdminLink) {
+        footerAdminLink.href = './login.html';
+        footerAdminLink.innerHTML = `<i class="fa-solid fa-circle-user"></i> ${currentLang === 'zh' ? '會員登入 / 註冊' : 'Login / Register'}`;
+      }
+    }
+  };
+
+  // Sync with Firebase state if available
+  if (typeof useFirebase !== 'undefined' && useFirebase) {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        sessionStorage.setItem('aiu_member_auth', 'true');
+      } else {
+        sessionStorage.removeItem('aiu_member_auth');
+      }
+      updateNavbarText();
+    });
+  } else {
+    updateNavbarText();
+  }
+
+  // Hook into translation updates to refresh custom navbar texts dynamically
+  const origApplyTranslations = applyTranslations;
+  applyTranslations = function(lang) {
+    origApplyTranslations(lang);
+    updateNavbarText();
+  };
+}
 
 // 3. Language Selector Logic
 function initLanguage() {
