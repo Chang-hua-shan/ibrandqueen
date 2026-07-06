@@ -1934,3 +1934,18 @@ button, input, select, textarea {
   .tag-4 { bottom: 10%; right: -3%; }
 }
 
+/* Admin Link Navbar Highlight */
+.nav-admin-link {
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+}
+.nav-admin-link i {
+  margin-right: 4px;
+  font-size: 13px;
+  transition: transform 0.2s ease;
+}
+.nav-admin-link:hover i {
+  transform: rotate(-15deg) scale(1.1);
+}
+
+
