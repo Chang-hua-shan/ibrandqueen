@@ -83,6 +83,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -515,6 +516,11 @@ button, input, select, textarea {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.about-visual .portrait-frame {
+  width: 320px;
+  height: 400px;
 }
 
 .portrait-glow-ring {
@@ -1635,7 +1641,7 @@ button, input, select, textarea {
   }
 
   .hero-visual {
-    margin-top: 40px;
+    display: none;
   }
 
   .about-grid {
@@ -1662,19 +1668,19 @@ button, input, select, textarea {
 
 @media (max-width: 600px) {
   .experience-badge {
-    width: 120px;
-    height: 120px;
-    bottom: -20px;
-    right: -10px;
-    padding: 16px;
+    width: 100px;
+    height: 100px;
+    bottom: 10px;
+    right: 10px;
+    padding: 12px;
   }
   
   .exp-num {
-    font-size: 28px;
+    font-size: 22px;
   }
   
   .exp-text {
-    font-size: 9px;
+    font-size: 8px;
   }
 
   .service-card {
