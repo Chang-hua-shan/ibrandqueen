@@ -2178,6 +2178,90 @@ button, input, select, textarea {
   }
 }
 
+/* Floating Social Dock Styling */
+.social-dock {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1000;
+  pointer-events: auto;
+}
 
+.social-dock-item {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
+.social-dock-item:hover {
+  transform: scale(1.15) translateX(-5px);
+  color: #ffffff;
+  box-shadow: var(--shadow-glow);
+  border-color: transparent;
+}
 
+/* Custom hover colors for specific platforms */
+.social-dock-item.yt:hover {
+  background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+  box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+}
+
+.social-dock-item.fb:hover {
+  background: linear-gradient(135deg, #1877f2 0%, #166fe5 100%);
+  box-shadow: 0 10px 20px rgba(24, 119, 242, 0.3);
+}
+
+.social-dock-item.ig:hover {
+  background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+  box-shadow: 0 10px 20px rgba(253, 29, 29, 0.3);
+}
+
+.social-dock-item.line:hover {
+  background: linear-gradient(135deg, #06c755 0%, #05b04b 100%);
+  box-shadow: 0 10px 20px rgba(6, 199, 85, 0.3);
+}
+
+/* Responsive bottom row for mobile devices */
+@media (max-width: 768px) {
+  .social-dock {
+    right: 50%;
+    top: auto;
+    bottom: 20px;
+    transform: translateX(50%);
+    flex-direction: row;
+    background: var(--bg-glass);
+    padding: 8px 16px;
+    border-radius: 30px;
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    gap: 16px;
+  }
+  
+  .social-dock-item {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+    box-shadow: none;
+  }
+  
+  .social-dock-item:hover {
+    transform: scale(1.15) translateY(-5px);
+  }
+}
