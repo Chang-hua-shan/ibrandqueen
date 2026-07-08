@@ -1621,7 +1621,7 @@ button, input, select, textarea {
 
 @media (max-width: 500px) {
   .hero-title {
-    font-size: 36px;
+    font-size: 30px; /* Reduced from 36px to prevent layout shift and wrapping */
   }
   
   .hero-btns {
@@ -1827,6 +1827,7 @@ button, input, select, textarea {
   align-items: center;
   position: relative;
   min-height: 1.2em;
+  white-space: nowrap; /* Prevent cursor and text from wrapping to a new line */
 }
 
 .cursor {
