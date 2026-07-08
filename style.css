@@ -1274,6 +1274,29 @@ button, input, select, textarea {
   line-height: 1.6;
 }
 
+@media (max-width: 480px) {
+  .profile-name {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 400px) {
+  .card-container {
+    padding: 24px 16px;
+    gap: 20px;
+  }
+  
+  .quick-icon-box {
+    width: 46px;
+    height: 46px;
+    font-size: 17px;
+  }
+  
+  .quick-link-label {
+    font-size: 11px;
+  }
+}
+
 /* --------------------------------------------------------------------------
    10. Footer Component
    -------------------------------------------------------------------------- */
@@ -1580,6 +1603,24 @@ button, input, select, textarea {
     grid-template-columns: 1fr;
   }
 
+  .about, .services, .card-showcase, .pricing-section, .booking {
+    padding: 60px 0;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .pricing-section .section-header h3 {
+    font-size: 26px;
+  }
+
+  .portrait-frame {
+    width: min(320px, 85vw);
+    height: auto;
+    aspect-ratio: 9 / 11;
+  }
+
   .hero-grid {
     text-align: center;
     padding-top: 40px;
@@ -1601,7 +1642,7 @@ button, input, select, textarea {
     direction: rtl; /* Flip visual below text on mobile */
   }
 
-  .about-text, .about-visual {
+  .about-content, .about-visual {
     direction: ltr; /* Reset text alignment direction */
   }
 
@@ -1616,6 +1657,64 @@ button, input, select, textarea {
 
   .form-card {
     padding: 30px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .experience-badge {
+    width: 120px;
+    height: 120px;
+    bottom: -20px;
+    right: -10px;
+    padding: 16px;
+  }
+  
+  .exp-num {
+    font-size: 28px;
+  }
+  
+  .exp-text {
+    font-size: 9px;
+  }
+
+  .service-card {
+    padding: 24px;
+  }
+
+  .pricing-card {
+    padding: 24px 20px;
+  }
+
+  .card-mockup {
+    width: min(300px, 90vw);
+    height: auto;
+    aspect-ratio: 2 / 3;
+    padding: 24px;
+  }
+
+  .mockup-body {
+    margin: 20px 0;
+  }
+
+  .mockup-avatar {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 12px auto;
+  }
+
+  .mockup-name {
+    font-size: 20px;
+  }
+
+  .card-showcase-content div[style*="display: flex"] {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  .card-showcase-content div[style*="display: flex"] a,
+  .card-showcase-content div[style*="display: flex"] button {
+    width: 100% !important;
+    justify-content: center;
   }
 }
 
@@ -1957,6 +2056,11 @@ button, input, select, textarea {
   position: relative;
 }
 
+.pricing-section .section-header h3 {
+  font-size: 32px;
+  font-weight: 800;
+}
+
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2242,29 +2346,29 @@ button, input, select, textarea {
 /* Responsive bottom row for mobile devices */
 @media (max-width: 768px) {
   .social-dock {
-    right: 50%;
+    right: 12px;
     top: auto;
-    bottom: 20px;
-    transform: translateX(50%);
-    flex-direction: row;
+    bottom: 80px;
+    transform: none;
+    flex-direction: column;
     background: var(--bg-glass);
-    padding: 8px 16px;
-    border-radius: 30px;
+    padding: 8px 6px;
+    border-radius: 20px;
     border: 1px solid var(--border-glass);
     box-shadow: var(--shadow-md);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    gap: 16px;
+    gap: 8px;
   }
   
   .social-dock-item {
-    width: 44px;
-    height: 44px;
-    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
     box-shadow: none;
   }
   
   .social-dock-item:hover {
-    transform: scale(1.15) translateY(-5px);
+    transform: scale(1.15) translateX(-3px);
   }
 }
