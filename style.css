@@ -1825,6 +1825,7 @@ button, input, select, textarea {
 .typewriter-container {
   display: inline-flex;
   align-items: center;
+  vertical-align: middle; /* Pin vertical alignment to prevent baseline layout shifts */
   position: relative;
   min-height: 1.2em;
   white-space: nowrap; /* Prevent cursor and text from wrapping to a new line */
@@ -1832,6 +1833,7 @@ button, input, select, textarea {
 
 .cursor {
   display: inline-block;
+  vertical-align: middle; /* Pinned to prevent vertical baseline shifting */
   width: 3px;
   height: 1.1em;
   background-color: var(--accent-pink);
