@@ -672,6 +672,8 @@
 
         <!-- View 2: Compose & Send Panel -->
         <div id="panel-compose" class="content-panel">
+          <!-- Hidden File Input for Local Image Uploading -->
+          <input type="file" id="newsletter-image-file" accept="image/*" style="display: none;">
           <div class="dashboard-card" style="margin-bottom: 0;">
             <div class="card-title-bar">
               <h2><i class="fa-solid fa-pen-fancy"></i> 撰寫電子報訊息</h2>
@@ -1043,6 +1045,83 @@
         });
       }
 
+      // 圖片本機選擇與上傳雲端監聽
+      const fileInput = document.getElementById('newsletter-image-file');
+      if (fileInput) {
+        fileInput.addEventListener('change', async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+
+          // 限制檔案大小為 5MB (以防 GAS 傳輸超時)
+          if (file.size > 5 * 1024 * 1024) {
+            showToast('圖片檔案太大！請選擇 5MB 以下的圖片。', 'fa-solid fa-triangle-exclamation', true);
+            fileInput.value = '';
+            return;
+          }
+
+          const passcode = sessionStorage.getItem('brandqueen_admin_passcode');
+          if (!passcode) {
+            showToast('驗證失效，請重新登入！', 'fa-solid fa-triangle-exclamation', true);
+            return;
+          }
+
+          // 讀取檔案為 Base64 字串
+          const reader = new FileReader();
+          reader.onload = async (event) => {
+            const base64String = event.target.result.split(',')[1];
+            
+            // 載入中狀態提示
+            const submitBtn = document.getElementById('btn-submit-newsletter');
+            const originalText = submitBtn ? submitBtn.innerHTML : '';
+            if (submitBtn) {
+              submitBtn.disabled = true;
+              submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在將圖片上傳至雲端硬碟中...';
+            }
+            writeLog('Upload', `正在上傳本機圖片「${file.name}」到您的 Google Drive...`);
+            showToast('正在上傳圖片中，請稍候...', 'fa-solid fa-spinner fa-spin');
+
+            try {
+              const response = await fetch(gasUrl, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'text/plain'
+                },
+                body: JSON.stringify({
+                  action: 'uploadImage',
+                  password: passcode,
+                  fileName: file.name,
+                  fileType: file.type,
+                  base64Data: base64String
+                })
+              });
+
+              const data = await response.json();
+              if (data.success) {
+                const imgHtml = `<img src="${data.url}" style="max-width:100%; border-radius:12px; margin:12px 0;" alt="${file.name}">`;
+                insertTag(imgHtml);
+                writeLog('Upload', `圖片上傳成功！已將雲端圖片代碼插入編輯器中。`);
+                showToast('圖片上傳成功！已插入編輯區。', 'fa-solid fa-circle-check');
+              } else {
+                writeLog('Upload', '上傳失敗: ' + (data.error || '未知錯誤'), true);
+                showToast(data.error || '上傳圖片發生錯誤！', 'fa-solid fa-circle-xmark', true);
+              }
+            } catch (err) {
+              console.error(err);
+              writeLog('Upload', '網路傳送錯誤: ' + err.toString(), true);
+              showToast('無法連接至 GAS 伺服器，上傳失敗！', 'fa-solid fa-circle-xmark', true);
+            } finally {
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+              }
+              fileInput.value = ''; // 清除欄位
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
       // 手機版側邊欄開關控制
       const toggleBtn = document.getElementById('sidebar-toggle-btn');
       const sidebar = document.getElementById('admin-sidebar');
@@ -1154,12 +1233,20 @@
       textarea.selectionEnd = startPos + startTag.length + selectedText.length;
     }
 
-    // 插入圖片標籤
+    // 插入圖片標籤 (支援上傳本機圖片或手動貼上網址)
     function insertImageTag() {
-      const url = prompt("請輸入圖片網址 (URL)：\n*(例如：https://domain.com/image.png)*", "https://");
-      if (!url || url.trim() === "" || url === "https://") return;
-      const imgHtml = `<img src="${url.trim()}" style="max-width:100%; border-radius:12px; margin:12px 0;" alt="品牌女王電子報圖片">`;
-      insertTag(imgHtml);
+      const uploadLocal = confirm("【插入圖片工具】\n\n- 點擊「確定」：從您的電腦選擇一張圖片檔案自動上傳到雲端硬碟。\n- 點擊「取消」：手動輸入網路上的圖片 URL 網址。");
+      if (uploadLocal) {
+        const fileInput = document.getElementById('newsletter-image-file');
+        if (fileInput) {
+          fileInput.click();
+        }
+      } else {
+        const url = prompt("請輸入圖片網址 (URL)：\n*(例如：https://domain.com/image.png)*", "https://");
+        if (!url || url.trim() === "" || url === "https://") return;
+        const imgHtml = `<img src="${url.trim()}" style="max-width:100%; border-radius:12px; margin:12px 0;" alt="品牌女王電子報圖片">`;
+        insertTag(imgHtml);
+      }
     }
     
     // 插入快速連結標籤 (以精美桃紅字加底線呈現)

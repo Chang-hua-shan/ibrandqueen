@@ -139,6 +139,17 @@ function doPost(e) {
         responseData = { success: true, message: "密碼更新成功！" };
       }
     }
+    else if (action === "uploadImage") {
+      // 上傳本機圖片並儲存到 Google Drive 產生直連
+      var fileName = jsonPayload.fileName;
+      var fileType = jsonPayload.fileType;
+      var base64Data = jsonPayload.base64Data;
+      if (!fileName || !fileType || !base64Data) {
+        responseData = { success: false, error: "上傳失敗：檔案資料不完整！" };
+      } else {
+        responseData = saveFileToDrive(fileName, fileType, base64Data);
+      }
+    }
     else {
       responseData = { error: "Unknown action: " + action };
     }
@@ -443,5 +454,42 @@ function logEvent(type, message) {
     }
   } catch (e) {
     Logger.log("寫入日誌失敗: " + e.toString());
+  }
+}
+
+// ==========================================
+// 11. 業務邏輯：上傳本機圖片到 Google 雲端硬碟
+// ==========================================
+
+function saveFileToDrive(fileName, fileType, base64Data) {
+  try {
+    var rawData = Utilities.base64Decode(base64Data);
+    var blob = Utilities.newBlob(rawData, fileType, fileName);
+    
+    // 尋找或建立名為 "iBrandQueen_Assets" 的雲端資料夾
+    var folders = DriveApp.getFoldersByName("iBrandQueen_Assets");
+    var folder;
+    if (folders.hasNext()) {
+      folder = folders.next();
+    } else {
+      folder = DriveApp.createFolder("iBrandQueen_Assets");
+    }
+    
+    // 建立檔案
+    var file = folder.createFile(blob);
+    
+    // 將檔案設定為「任何人只要有連結均可檢視」 (供 Email 中正常顯示圖片)
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    
+    var fileId = file.getId();
+    // 取得 Google Drive 圖片直連 URL (常用於 html 顯示)
+    var downloadUrl = "https://drive.google.com/uc?export=view&id=" + fileId;
+    
+    logEvent("Info", "圖片上傳雲端成功: " + fileName + " (ID: " + fileId + ")");
+    return { success: true, url: downloadUrl };
+  } catch (err) {
+    Logger.log("上傳發生錯誤: " + err.toString());
+    logEvent("Error", "圖片上傳發生錯誤: " + err.toString());
+    return { success: false, error: "上傳發生錯誤：" + err.toString() };
   }
 }
