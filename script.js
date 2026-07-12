@@ -83,6 +83,7 @@ const translations = {
     footer_desc: "高端菁英與創辦人個人品牌與行銷對接的頂尖顧問團隊。定義高度，放大影響力。",
     footer_links_title: "探索連結",
     footer_admin: "管理員登入",
+    footer_newsletter: "電子報發送後台",
     footer_contact_title: "聯絡諮詢",
     copyright: "&copy; 2026 Carolina's Wonderland. All rights reserved.",
     modal_title: "掃描分享名片",
@@ -191,6 +192,7 @@ const translations = {
     footer_desc: "Premier consulting team connecting personal brands and marketing opportunities for founders and executives. Define Heights, Amplify Influence.",
     footer_links_title: "Explore Links",
     footer_admin: "Admin Portal",
+    footer_newsletter: "Newsletter Panel",
     footer_contact_title: "Contact Info",
     copyright: "&copy; 2026 Carolina's Wonderland. All rights reserved.",
     modal_title: "Scan to Share Card",
@@ -689,6 +691,73 @@ function initForms() {
 
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => handleFormSubmit(e, contactForm, true));
+  }
+
+  // Handle digital card newsletter subscription
+  const subscribeForm = document.getElementById('card-subscribe-form');
+  if (subscribeForm) {
+    subscribeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const emailInput = document.getElementById('subscribe-email');
+      const emailVal = emailInput ? emailInput.value.trim() : '';
+      const submitBtn = document.getElementById('btn-subscribe-submit');
+      const textSpan = submitBtn ? submitBtn.querySelector('.btn-submit-text') : null;
+      const icon = submitBtn ? submitBtn.querySelector('i') : null;
+      
+      if (!emailVal || emailVal.indexOf('@') === -1) {
+        triggerToast('請輸入有效的電子信箱格式！', 'fa-solid fa-triangle-exclamation');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        if (textSpan) textSpan.textContent = '處理中...';
+        if (icon) icon.className = 'fa-solid fa-spinner fa-spin';
+      }
+
+      const gasUrl = GOOGLE_SHEETS_URL || localStorage.getItem('brandqueen_admin_gas_url') || localStorage.getItem('brandqueen_google_sheets_url');
+      if (!gasUrl) {
+        triggerToast('後台串接未設定，請聯絡系統人員！', 'fa-solid fa-triangle-exclamation');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          if (textSpan) textSpan.textContent = '立即訂閱電子報';
+          if (icon) icon.className = 'fa-solid fa-paper-plane';
+        }
+        return;
+      }
+
+      try {
+        const response = await fetch(gasUrl, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'text/plain'
+          },
+          body: JSON.stringify({
+            action: 'subscribeEmail',
+            email: emailVal,
+            source: '數位名片'
+          })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          triggerToast('感謝訂閱！已成功登記至您的電子郵件名單。', 'fa-solid fa-circle-check');
+          subscribeForm.reset();
+        } else {
+          triggerToast(data.message || '訂閱失敗，請稍後重試！', 'fa-solid fa-circle-xmark');
+        }
+      } catch (err) {
+        console.error(err);
+        triggerToast('連線失敗，請檢查網路設定！', 'fa-solid fa-circle-xmark');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          if (textSpan) textSpan.textContent = '立即訂閱電子報';
+          if (icon) icon.className = 'fa-solid fa-paper-plane';
+        }
+      }
+    });
   }
 
   function triggerToast(message, iconClass) {
