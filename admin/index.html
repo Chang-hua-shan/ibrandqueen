@@ -698,7 +698,8 @@
                   <button type="button" class="helper-btn" onclick="insertTag('<strong>', '</strong>')"><i class="fa-solid fa-bold"></i> 粗體</button>
                   <button type="button" class="helper-btn" onclick="insertTag('<h3>', '</h3>')"><i class="fa-solid fa-heading"></i> 標題</button>
                   <button type="button" class="helper-btn" onclick="insertTag('<p style=\'color:#ff2a75;\'>', '</p>')"><i class="fa-solid fa-palette"></i> 桃紅字</button>
-                  <button type="button" class="helper-btn" onclick="insertImageTag()"><i class="fa-solid fa-image"></i> 插入圖片</button>
+                  <button type="button" class="helper-btn" onclick="triggerLocalImageUpload()"><i class="fa-solid fa-upload"></i> 上傳本機圖片</button>
+                  <button type="button" class="helper-btn" onclick="insertImageUrl()"><i class="fa-solid fa-image"></i> 插入網路圖片</button>
                   <button type="button" class="helper-btn" onclick="insertQuickLink()"><i class="fa-solid fa-link"></i> 插入快速連結</button>
                 </div>
 
@@ -1233,20 +1234,20 @@
       textarea.selectionEnd = startPos + startTag.length + selectedText.length;
     }
 
-    // 插入圖片標籤 (支援上傳本機圖片或手動貼上網址)
-    function insertImageTag() {
-      const uploadLocal = confirm("【插入圖片工具】\n\n- 點擊「確定」：從您的電腦選擇一張圖片檔案自動上傳到雲端硬碟。\n- 點擊「取消」：手動輸入網路上的圖片 URL 網址。");
-      if (uploadLocal) {
-        const fileInput = document.getElementById('newsletter-image-file');
-        if (fileInput) {
-          fileInput.click();
-        }
-      } else {
-        const url = prompt("請輸入圖片網址 (URL)：\n*(例如：https://domain.com/image.png)*", "https://");
-        if (!url || url.trim() === "" || url === "https://") return;
-        const imgHtml = `<img src="${url.trim()}" style="max-width:100%; border-radius:12px; margin:12px 0;" alt="品牌女王電子報圖片">`;
-        insertTag(imgHtml);
+    // 啟動本機圖片選擇與上傳
+    function triggerLocalImageUpload() {
+      const fileInput = document.getElementById('newsletter-image-file');
+      if (fileInput) {
+        fileInput.click();
       }
+    }
+    
+    // 插入外部網路圖片 URL
+    function insertImageUrl() {
+      const url = prompt("請輸入外部圖片網址 (URL)：\n*(例如：https://domain.com/image.png)*", "https://");
+      if (!url || url.trim() === "" || url === "https://") return;
+      const imgHtml = `<img src="${url.trim()}" style="max-width:100%; border-radius:12px; margin:12px 0;" alt="品牌女王電子報圖片">`;
+      insertTag(imgHtml);
     }
     
     // 插入快速連結標籤 (以精美桃紅字加底線呈現)
