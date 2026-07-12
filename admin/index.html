@@ -933,6 +933,16 @@
         } catch (err) {
           console.error(err);
           showToast('無法連接至後端，請確認 GAS 網址是否正確！', 'fa-solid fa-circle-xmark', true);
+          
+          // 如果連線失敗，自動將 GAS URL 設定欄位顯示出來，供管理員重新填寫或修正
+          const loginGasGroup = document.getElementById('login-gas-group');
+          if (loginGasGroup) {
+            loginGasGroup.style.display = 'block';
+            const loginGasUrlInput = document.getElementById('login-gas-url');
+            if (loginGasUrlInput) {
+              loginGasUrlInput.value = selectedGasUrl; // 填入目前的網址供修正
+            }
+          }
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
