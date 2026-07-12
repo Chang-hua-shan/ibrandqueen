@@ -864,6 +864,7 @@
     let gasUrl = "https://script.google.com/macros/s/AKfycbxaa_U0FEf2ehEBICuq4h79-HCvWO54mGjD0bRkZNuadcGQY4_CHlPvbzmmIghw2_fM/exec";
     let lineToken = "";
     let isConfigOpen = false;
+    let hasLoadedStats = false; // 快取狀態：是否已成功載入過試算表數據
 
     document.addEventListener('DOMContentLoaded', () => {
       // 載入 localStorage 的設定
@@ -923,7 +924,8 @@
             showToast('密碼驗證成功！載入控制板...', 'fa-solid fa-circle-check');
             checkAuth();
             
-            // 渲染載入的資料
+            // 渲染載入的資料並標記已成功載入，防止切換分頁重複查詢
+            hasLoadedStats = true;
             renderDashboardStats(data);
           } else {
             showToast(data.error || '密碼錯誤，拒絕存取！', 'fa-solid fa-circle-xmark', true);
@@ -1131,9 +1133,9 @@
       const sidebar = document.getElementById('admin-sidebar');
       if (sidebar) sidebar.classList.remove('open');
 
-      // 5. 自動觸發後端數據同步，更新最新名單與數據 (免去手動重新整理網頁)
+      // 5. 自動觸發後端數據同步 (僅在首次載入分頁時觸發，後續點擊直接讀取快取；如需強制更新，可按右上角同步按鈕)
       if (panelId === 'panel-subscribers' || panelId === 'panel-overview') {
-        if (gasUrl && sessionStorage.getItem('brandqueen_admin_authenticated') === 'true') {
+        if (gasUrl && sessionStorage.getItem('brandqueen_admin_authenticated') === 'true' && !hasLoadedStats) {
           syncStats();
         }
       }
@@ -1274,6 +1276,7 @@
         const data = await response.json();
         
         if (data.success) {
+          hasLoadedStats = true; // 標記已成功載入
           renderDashboardStats(data);
           writeLog('Sync', `數據同步成功！Email: ${data.emailCount} 筆, LINE 用戶: ${data.lineUserCount} 筆, LINE 群組: ${data.lineGroupCount} 筆。`);
           showToast('雲端數據同步成功！', 'fa-solid fa-circle-check');
