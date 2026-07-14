@@ -186,15 +186,47 @@ function addEmailSubscriber(email, source) {
   if (!sheet) setupSheets();
   sheet = ss.getSheetByName("Emails");
   
-  // 檢查是否重複訂閱
   var data = sheet.getDataRange().getValues();
+  var headers = data[0];
+  
+  // 動態偵測欄位位置
+  var emailIdx = -1;
+  var dateIdx = -1;
+  var sourceIdx = -1;
+  
+  for (var col = 0; col < headers.length; col++) {
+    var headerStr = headers[col].toString().toLowerCase();
+    if (headerStr.indexOf("email") > -1 || headerStr.indexOf("信箱") > -1 || headerStr.indexOf("郵件") > -1) {
+      emailIdx = col;
+    } else if (headerStr.indexOf("時間") > -1 || headerStr.indexOf("date") > -1 || headerStr.indexOf("time") > -1 || headerStr.indexOf("戳記") > -1) {
+      dateIdx = col;
+    } else if (headerStr.indexOf("來源") > -1 || headerStr.indexOf("source") > -1 || headerStr.indexOf("管道") > -1) {
+      sourceIdx = col;
+    }
+  }
+  
+  if (emailIdx === -1) emailIdx = 0;
+  if (dateIdx === -1) dateIdx = 1;
+  if (sourceIdx === -1) sourceIdx = 2;
+  
+  // 檢查是否重複訂閱
   for (var i = 1; i < data.length; i++) {
-    if (data[i][0].toString().toLowerCase() === email.toLowerCase()) {
+    if (data[i][emailIdx] && data[i][emailIdx].toString().toLowerCase() === email.toLowerCase()) {
       return { success: true, message: "此 Email 已經在訂閱清單中。" };
     }
   }
   
-  sheet.appendRow([email, new Date(), source]);
+  // 根據欄位索引構造要寫入的陣列
+  var maxIdx = Math.max(emailIdx, dateIdx, sourceIdx);
+  var rowData = new Array(maxIdx + 1);
+  for (var k = 0; k <= maxIdx; k++) {
+    rowData[k] = "";
+  }
+  rowData[emailIdx] = email;
+  rowData[dateIdx] = new Date();
+  rowData[sourceIdx] = source;
+  
+  sheet.appendRow(rowData);
   logEvent("Info", "新 Email 訂閱: " + email + " (管道: " + source + ")");
   return { success: true, message: "成功加入電子郵件訂閱清單！" };
 }
@@ -216,12 +248,36 @@ function fetchDashboardStats() {
   
   if (emailSheet) {
     var emailData = emailSheet.getDataRange().getValues();
-    for (var i = 1; i < emailData.length; i++) {
-      emails.push({
-        email: emailData[i][0],
-        date: emailData[i][1],
-        source: emailData[i][2]
-      });
+    if (emailData.length > 0) {
+      var headers = emailData[0];
+      
+      // 動態偵測欄位位置
+      var emailIdx = -1;
+      var dateIdx = -1;
+      var sourceIdx = -1;
+      
+      for (var col = 0; col < headers.length; col++) {
+        var headerStr = headers[col].toString().toLowerCase();
+        if (headerStr.indexOf("email") > -1 || headerStr.indexOf("信箱") > -1 || headerStr.indexOf("郵件") > -1) {
+          emailIdx = col;
+        } else if (headerStr.indexOf("時間") > -1 || headerStr.indexOf("date") > -1 || headerStr.indexOf("time") > -1 || headerStr.indexOf("戳記") > -1) {
+          dateIdx = col;
+        } else if (headerStr.indexOf("來源") > -1 || headerStr.indexOf("source") > -1 || headerStr.indexOf("管道") > -1) {
+          sourceIdx = col;
+        }
+      }
+      
+      if (emailIdx === -1) emailIdx = 0;
+      if (dateIdx === -1) dateIdx = 1;
+      if (sourceIdx === -1) sourceIdx = 2;
+      
+      for (var i = 1; i < emailData.length; i++) {
+        emails.push({
+          email: emailData[i][emailIdx],
+          date: emailData[i][dateIdx],
+          source: emailData[i][sourceIdx]
+        });
+      }
     }
   }
   
