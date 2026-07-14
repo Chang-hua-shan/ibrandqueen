@@ -303,6 +303,16 @@ function fetchDashboardStats() {
     }
   }
   
+  var senderEmails = [Session.getEffectiveUser().getEmail()];
+  try {
+    var aliases = GmailApp.getAliases();
+    if (aliases && aliases.length > 0) {
+      senderEmails = senderEmails.concat(aliases);
+    }
+  } catch (e) {
+    Logger.log("無法獲取電子郵件別名: " + e.toString());
+  }
+  
   return {
     success: true,
     emailCount: emails.length,
@@ -311,7 +321,8 @@ function fetchDashboardStats() {
     emails: emails,
     lineUsers: lineUsers,
     lineGroups: lineGroups,
-    senderEmail: Session.getEffectiveUser().getEmail()
+    senderEmail: Session.getEffectiveUser().getEmail(),
+    senderEmails: senderEmails
   };
 }
 
@@ -324,6 +335,7 @@ function processNewsletterDistribution(payload) {
   var content = payload.content || "";
   var channels = payload.channels || {}; // e.g., { email: true, lineUser: true, lineGroup: true }
   var lineToken = payload.lineToken; // 可由網頁端後台傳遞過來
+  var senderEmail = payload.senderEmail; // 網頁端選取的發件信箱
   
   var results = {
     emailSent: 0,
@@ -339,11 +351,22 @@ function processNewsletterDistribution(payload) {
   
   // A. 發送 Gmail 電子郵件
   if (channels.email && stats.emails.length > 0) {
+    // 驗證選取的寄件人是否合法 (主信箱或別名)
+    var effectiveUser = Session.getEffectiveUser().getEmail();
+    var aliases = GmailApp.getAliases();
+    var isValidSender = (senderEmail === effectiveUser) || (aliases.indexOf(senderEmail) > -1);
+
     stats.emails.forEach(function(item) {
       try {
-        GmailApp.sendEmail(item.email, subject, "", {
+        var mailOptions = {
           htmlBody: content.replace(/\n/g, "<br>")
-        });
+        };
+        // 若指定了合法的發件別名，則設定為寄件人
+        if (senderEmail && isValidSender) {
+          mailOptions.from = senderEmail;
+        }
+        
+        GmailApp.sendEmail(item.email, subject, "", mailOptions);
         results.emailSent++;
       } catch (err) {
         results.emailFailed++;
