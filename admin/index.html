@@ -682,7 +682,12 @@
 
             <form id="newsletter-form">
               <div class="admin-input-group">
-                <label for="newsletter-subject">郵件主旨 (僅 Gmail 通道生效)</label>
+                <label for="newsletter-subject" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                  <span>郵件主旨 (僅 Gmail 通道生效)</span>
+                  <span style="font-size: 12px; font-weight: normal; color: var(--text-secondary);">
+                    (發送帳號: <span id="sender-email-display" style="font-weight: 700; color: var(--accent-pink);">載入中...</span>)
+                  </span>
+                </label>
                 <input type="text" id="newsletter-subject" class="admin-input" placeholder="請輸入電子報主旨" required>
               </div>
 
@@ -1289,6 +1294,13 @@
       document.getElementById('count-email-send').textContent = data.emailCount;
       document.getElementById('count-line-user-send').textContent = data.lineUserCount;
       document.getElementById('count-line-group-send').textContent = data.lineGroupCount;
+
+      // 顯示發件人信箱
+      if (data.senderEmail) {
+        document.getElementById('sender-email-display').textContent = data.senderEmail;
+      } else {
+        document.getElementById('sender-email-display').textContent = "預設 Gmail 帳號";
+      }
 
       // 填入 Email 清單
       const emailBody = document.getElementById('table-emails-body');

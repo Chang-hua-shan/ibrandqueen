@@ -310,7 +310,8 @@ function fetchDashboardStats() {
     lineGroupCount: lineGroups.length,
     emails: emails,
     lineUsers: lineUsers,
-    lineGroups: lineGroups
+    lineGroups: lineGroups,
+    senderEmail: Session.getEffectiveUser().getEmail()
   };
 }
 
