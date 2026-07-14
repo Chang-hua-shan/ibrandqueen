@@ -861,7 +861,7 @@
   <!-- Dashboard JavaScript Logic -->
   <script>
     // 全局變數 (預設載入與官網 card 相同的 GAS URL，如有需要可在後台設定中更改)
-    let gasUrl = "https://script.google.com/macros/s/AKfycbxaa_U0FEf2ehEBICuq4h79-HCvWO54mGjD0bRkZNuadcGQY4_CHlPvbzmmIghw2_fM/exec";
+    let gasUrl = "https://script.google.com/macros/s/AKfycbzxzXytRr49CDuwgh24sOTzkFPRBbLCbkOBIu4ZKwgoi44g3U0ZP5eXejL---kQhufm/exec";
     let lineToken = "";
     let isConfigOpen = false;
     let hasLoadedStats = false; // 快取狀態：是否已成功載入過試算表數據
@@ -1169,7 +1169,7 @@
 
     // 載入串接設定
     function loadConfig() {
-      gasUrl = localStorage.getItem('brandqueen_admin_gas_url') || "https://script.google.com/macros/s/AKfycbxaa_U0FEf2ehEBICuq4h79-HCvWO54mGjD0bRkZNuadcGQY4_CHlPvbzmmIghw2_fM/exec";
+      gasUrl = localStorage.getItem('brandqueen_admin_gas_url') || "https://script.google.com/macros/s/AKfycbzxzXytRr49CDuwgh24sOTzkFPRBbLCbkOBIu4ZKwgoi44g3U0ZP5eXejL---kQhufm/exec";
       lineToken = localStorage.getItem('brandqueen_admin_line_token') || "";
       
       document.getElementById('gas-url').value = gasUrl;

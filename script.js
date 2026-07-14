@@ -8,7 +8,7 @@
 // 0. 雲端系統整合設定 (Cloud Integration Config)
 // ==========================================================================
 // 請在下方引號中貼上您部署好的 Google Apps Script 網頁應用程式 (Web App) 網址：
-const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxaa_U0FEf2ehEBICuq4h79-HCvWO54mGjD0bRkZNuadcGQY4_CHlPvbzmmIghw2_fM/exec";
+const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbzxzXytRr49CDuwgh24sOTzkFPRBbLCbkOBIu4ZKwgoi44g3U0ZP5eXejL---kQhufm/exec";
 
 // 1. Localization Dictionary (Traditional Chinese & English)
 const translations = {
